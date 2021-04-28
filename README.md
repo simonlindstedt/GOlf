@@ -20,7 +20,7 @@ Add the installation instructions.
 
 Tested by the following people:
 
-1. Jane Doe
+1. Jane Boe
 2. John Doe
 3. Jane Doe
 4. John Doe

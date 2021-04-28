@@ -1,9 +1,22 @@
 {
   "private": true,
   "dependencies": {
+    "matterjs": "^0.1.3",
+    "pixi-particles": "^4.3.0",
+    "pixi.js": "^6.0.2",
     "prettier": "^2.2.1"
+  },
+  "scripts": {
+    "start": "parcel serve --port 4000 ./src/index.html",
+    "build": "parcel build ./src/index.html",
+    "serve": "npx servor ./src index.html 4000 --reload",
+    "clean": "rm -rf .parcel-cache && rm -rf dist"
   },
   "prettier": {
     "singleQuote": true
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.0.0-beta.2",
+    "parcel": "^2.0.0-beta.2"
   }
 }

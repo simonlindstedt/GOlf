@@ -3,9 +3,18 @@ import PIXI, { Sprite, Texture } from 'pixi.js';
 import wallPng from 'url:~src/js/game/assets/textures/white.png';
 
 export default class Wall {
-  constructor(x, y, width, height, angle, restitution = 0.5, isStatic = true) {
+  constructor(
+    x,
+    y,
+    width,
+    height,
+    angle,
+    restitution = 0.5,
+    isStatic = true,
+    image = wallPng
+  ) {
     //Sprite
-    this.sprite = Sprite.from(Texture.from(wallPng));
+    this.sprite = Sprite.from(Texture.from(image));
     this.height = height;
     this.width = width;
     this.angle = angle;

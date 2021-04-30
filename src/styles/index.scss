@@ -1,6 +1,11 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
-  background: hotpink;
-  h1 {
-    background: red;
-  }
+  margin: 0;
+}
+
+canvas {
+  position: absolute;
 }

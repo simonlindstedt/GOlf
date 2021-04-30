@@ -12,10 +12,18 @@ export default class Game {
     this.app = new PIXI.Application({
       width: this.width,
       height: this.height,
-      backgroundAlpha: 0.1,
+      antialias: true,
+      autoDensity: true,
+      resolution: window.devicePixelRatio,
+      backgroundColor: 0xffffff,
     });
     this.engine = Matter.Engine.create();
+    this.engine.gravity = {
+      x: 0,
+      y: 0,
+    };
     this.addBodies();
+    this.setupEvents();
   }
 
   addBodies() {
@@ -24,16 +32,39 @@ export default class Game {
     grass.height = this.height;
     this.app.stage.addChild(grass);
 
-    this.ball = new Ball(100, 100, 100);
-    this.app.stage.addChild(this.ball.sprite);
+    // this.ball = new Ball(100, 100, 100);
+    // this.app.stage.addChild(this.ball.sprite);
 
     this.wall = new Wall(200, 200, 100, 10, 0, 0.5);
     this.app.stage.addChild(this.wall.sprite);
 
+    this.ball = new Ball(100, 100, 20);
+    this.app.stage.addChild(this.ball.sprite);
+    this.app.stage.addChild(this.ball.powerDisplay);
+    this.app.stage.addChild(this.ball.aimLine);
+
     Matter.World.add(this.engine.world, [this.ball.body, this.wall.body]);
   }
 
-  setupEvents() {}
+  setupEvents() {
+    this.mouseDown = false;
+    this.mousePos = { x: 0, y: 0 };
+
+    window.addEventListener('mousedown', () => {
+      this.mouseDown = true;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      this.mousePos.x = e.x;
+      this.mousePos.y = e.y;
+      this.ball.distanceFromMouse(this.mousePos);
+    });
+
+    window.addEventListener('mouseup', () => {
+      this.mouseDown = false;
+      this.ball.shoot(this.mousePos);
+    });
+  }
 
   start(debug) {
     document.body.appendChild(this.app.view);
@@ -57,5 +88,6 @@ export default class Game {
   update() {
     Matter.Engine.update(this.engine);
     this.ball.moveBall();
+    this.ball.drawAimDisplay(this.mousePos, this.mouseDown);
   }
 }

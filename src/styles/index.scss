@@ -1,2 +1,11 @@
-@use 'global';
-@use 'layout';
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+canvas {
+  position: absolute;
+}

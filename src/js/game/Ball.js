@@ -64,6 +64,15 @@ export default class Ball {
     this.powerDisplayRadius = this.distance.current;
   }
 
+  isInHole(hole) {
+    if (
+      Math.abs(this.body.position.x - hole.x) < hole.radius &&
+      Math.abs(this.body.position.y - hole.y) < hole.radius
+    ) {
+      console.log('Is in hole!');
+    }
+  }
+
   moveBall() {
     this.sprite.x = this.body.position.x;
     this.sprite.y = this.body.position.y;

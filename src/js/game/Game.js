@@ -4,6 +4,7 @@ import Wall from './Wall';
 import * as PIXI from 'pixi.js';
 import { Sprite, Texture } from 'pixi.js';
 import grassImage from 'url:~src/js/game/assets/textures/grass.jpeg';
+import Hole from './Hole.js';
 
 export default class Game {
   constructor(w, h) {
@@ -38,12 +39,17 @@ export default class Game {
     this.wall = new Wall(200, 200, 100, 10, 0, 0.5);
     this.app.stage.addChild(this.wall.sprite);
 
+    this.hole = new Hole(400, 100, 25);
+    this.app.stage.addChild(this.hole.sprite);
+
     this.ball = new Ball(100, 100, 20);
     this.app.stage.addChild(this.ball.sprite);
     this.app.stage.addChild(this.ball.powerDisplay);
     this.app.stage.addChild(this.ball.aimLine);
 
     Matter.World.add(this.engine.world, [this.ball.body, this.wall.body]);
+    console.log(this.hole.body);
+    console.log(this.hole.sprite);
   }
 
   setupEvents() {
@@ -89,5 +95,6 @@ export default class Game {
     Matter.Engine.update(this.engine);
     this.ball.moveBall();
     this.ball.drawAimDisplay(this.mousePos, this.mouseDown);
+    this.ball.isInHole(this.hole);
   }
 }

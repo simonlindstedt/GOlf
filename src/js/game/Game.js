@@ -95,6 +95,6 @@ export default class Game {
     Matter.Engine.update(this.engine);
     this.ball.moveBall();
     this.ball.drawAimDisplay(this.mousePos, this.mouseDown);
-    this.ball.isInHole(this.hole);
+    this.ball.isInHole(this.hole, this.engine);
   }
 }

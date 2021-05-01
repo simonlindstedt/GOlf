@@ -2,7 +2,7 @@ import { Texture } from '@pixi/core';
 import { Graphics } from '@pixi/graphics';
 import { Sprite } from '@pixi/sprite';
 import ballSprite from 'url:~src/js/game/assets/textures/ball.png';
-import { Bodies, Vector, Body } from 'matter-js';
+import Matter, { Bodies, Vector, Body, Constraint } from 'matter-js';
 
 export default class Ball {
   constructor(x, y, r, options) {
@@ -15,6 +15,7 @@ export default class Ball {
     this.powerDisplay = new Graphics();
     this.powerDisplayRadius = 0;
     this.aimLine = new Graphics();
+    this.constraint = undefined;
     this.body = Bodies.circle(x, y, r, options);
     this.distance = {
       current: 0,
@@ -64,12 +65,24 @@ export default class Ball {
     this.powerDisplayRadius = this.distance.current;
   }
 
-  isInHole(hole) {
+  isInHole(hole, engine) {
     if (
-      Math.abs(this.body.position.x - hole.x) < hole.radius &&
-      Math.abs(this.body.position.y - hole.y) < hole.radius
+      Math.abs(this.body.position.x - hole.x) < hole.radius * 2 &&
+      Math.abs(this.body.position.y - hole.y) < hole.radius * 2
     ) {
       console.log('Is in hole!');
+      this.constraint = Constraint.create({
+        bodyA: this.body,
+        pointB: { x: hole.x, y: hole.y },
+        stiffness: 0.0001,
+        length: 0,
+      });
+      Matter.Composite.add(engine.world, this.constraint);
+    } else {
+      if (this.constraint) {
+        console.log('remove?');
+        // Matter.Composite.remove(engine.world, this.constraint, true);
+      }
     }
   }
 

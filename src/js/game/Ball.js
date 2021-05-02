@@ -2,7 +2,7 @@ import { Texture } from '@pixi/core';
 import { Graphics } from '@pixi/graphics';
 import { Sprite } from '@pixi/sprite';
 import ballSprite from 'url:~src/js/game/assets/textures/ball.png';
-import Matter, { Bodies, Vector, Body, Constraint } from 'matter-js';
+import { Bodies, Vector, Body, Constraint, Composite } from 'matter-js';
 
 export default class Ball {
   constructor(x, y, r, options) {
@@ -80,12 +80,12 @@ export default class Ball {
           length: 0,
         });
 
-        Matter.Composite.add(engine.world, this.holeConstraint);
+        Composite.add(engine.world, this.holeConstraint);
       }
     } else {
       // this.isInHole = false;
       if (this.holeConstraint) {
-        Matter.Composite.remove(engine.world, this.holeConstraint);
+        Composite.remove(engine.world, this.holeConstraint);
         this.holeConstraint = undefined;
       }
     }

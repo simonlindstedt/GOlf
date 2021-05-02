@@ -1,4 +1,3 @@
-import Matter from 'matter-js';
 import { Sprite, Texture } from 'pixi.js';
 import hole from 'url:~src/js/game/assets/textures/hole.png';
 

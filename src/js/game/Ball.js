@@ -12,10 +12,11 @@ export default class Ball {
     this.sprite.anchor.set(0.5);
     this.sprite.height = r * 2;
     this.sprite.width = r * 2;
+    // this.isInHole = false;
     this.powerDisplay = new Graphics();
     this.powerDisplayRadius = 0;
     this.aimLine = new Graphics();
-    this.constraint = undefined;
+    this.holeConstraint = undefined;
     this.body = Bodies.circle(x, y, r, options);
     this.distance = {
       current: 0,
@@ -70,18 +71,23 @@ export default class Ball {
       Math.abs(this.body.position.x - hole.x) < hole.radius * 2 &&
       Math.abs(this.body.position.y - hole.y) < hole.radius * 2
     ) {
-      console.log('Is in hole!');
-      this.constraint = Constraint.create({
-        bodyA: this.body,
-        pointB: { x: hole.x, y: hole.y },
-        stiffness: 0.0001,
-        length: 0,
-      });
-      Matter.Composite.add(engine.world, this.constraint);
+      // this.isInHole = true;
+      if (!this.holeConstraint) {
+        this.holeConstraint = Constraint.create({
+          bodyA: this.body,
+          pointB: { x: hole.x, y: hole.y },
+          stiffness: 0.002,
+          length: 0,
+        });
+
+        Matter.Composite.add(engine.world, this.holeConstraint);
+      }
     } else {
-      if (this.constraint) {
+      // this.isInHole = false;
+      if (this.holeConstraint) {
         console.log('remove?');
-        // Matter.Composite.remove(engine.world, this.constraint, true);
+        console.log(Matter.Composite.remove(engine.world, this.holeConstraint));
+        this.holeConstraint = undefined;
       }
     }
   }

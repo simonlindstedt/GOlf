@@ -48,7 +48,6 @@ export default class Game {
     this.app.stage.addChild(this.ball.aimLine);
 
     Matter.World.add(this.engine.world, [this.ball.body, this.wall.body]);
-    console.log(this.hole.body);
     console.log(this.hole.sprite);
   }
 
@@ -72,7 +71,7 @@ export default class Game {
     });
   }
 
-  start(debug) {
+  start(debug, stats) {
     document.body.appendChild(this.app.view);
     if (debug) {
       const debugRenderer = Matter.Render.create({
@@ -85,6 +84,7 @@ export default class Game {
         },
       });
       Matter.Render.run(debugRenderer);
+      if (stats) debugRenderer.options.showDebug = true;
     }
     this.app.ticker.add(() => {
       this.update();

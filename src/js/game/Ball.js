@@ -85,8 +85,7 @@ export default class Ball {
     } else {
       // this.isInHole = false;
       if (this.holeConstraint) {
-        console.log('remove?');
-        console.log(Matter.Composite.remove(engine.world, this.holeConstraint));
+        Matter.Composite.remove(engine.world, this.holeConstraint);
         this.holeConstraint = undefined;
       }
     }

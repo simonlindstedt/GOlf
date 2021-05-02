@@ -48,7 +48,6 @@ export default class Game {
     this.app.stage.addChild(this.ball.aimLine);
 
     Matter.World.add(this.engine.world, [this.ball.body, this.wall.body]);
-    console.log(this.hole.sprite);
   }
 
   setupEvents() {

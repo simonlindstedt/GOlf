@@ -1,5 +1,5 @@
 import Matter from 'matter-js';
-import PIXI, { Sprite, Texture } from 'pixi.js';
+import { Sprite, Texture } from 'pixi.js';
 import hole from 'url:~src/js/game/assets/textures/hole.png';
 
 export default class Hole {

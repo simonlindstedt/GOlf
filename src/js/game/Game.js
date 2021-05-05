@@ -5,6 +5,8 @@ import * as PIXI from 'pixi.js';
 import { Sprite, Texture } from 'pixi.js';
 import grassImage from 'url:~src/js/game/assets/textures/grass.jpeg';
 import Hole from './Hole.js';
+import Map from './Map';
+import Level from './Level';
 
 export default class Game {
   constructor(w, h) {
@@ -16,38 +18,43 @@ export default class Game {
       antialias: true,
       autoDensity: true,
       resolution: window.devicePixelRatio,
-      backgroundColor: 0xffffff,
+      backgroundColor: 0x00ff00,
     });
     this.engine = Matter.Engine.create();
     this.engine.gravity = {
       x: 0,
       y: 0,
     };
+    this.map = new Map();
+    this.map.renderMap('1');
     this.addBodies();
     this.setupEvents();
   }
 
   addBodies() {
-    const grass = Sprite.from(Texture.from(grassImage));
-    grass.width = this.width;
-    grass.height = this.height;
-    this.app.stage.addChild(grass);
+    for (let i = 0; i < this.map.sprites.length; i++) {
+      this.app.stage.addChild(this.map.sprites[i]);
+    }
 
-    // this.ball = new Ball(100, 100, 100);
-    // this.app.stage.addChild(this.ball.sprite);
+    for (let i = 0; i < this.map.bodies.length; i++) {
+      Matter.World.add(this.engine.world, [this.map.bodies[i]]);
+    }
 
-    this.wall = new Wall(200, 200, 100, 10, 0, 0.5);
-    this.app.stage.addChild(this.wall.sprite);
-
-    this.hole = new Hole(400, 100, 25);
+    this.hole = new Hole(
+      this.map.holeSettings.x,
+      this.map.holeSettings.y,
+      this.map.holeSettings.r
+    );
     this.app.stage.addChild(this.hole.sprite);
 
-    this.ball = new Ball(100, 100, 20);
+    this.ball = new Ball(this.map.ballSettings.x, this.map.ballSettings.x, 20, {
+      restitution: 1,
+    });
     this.app.stage.addChild(this.ball.sprite);
     this.app.stage.addChild(this.ball.powerDisplay);
     this.app.stage.addChild(this.ball.aimLine);
 
-    Matter.World.add(this.engine.world, [this.ball.body, this.wall.body]);
+    Matter.World.add(this.engine.world, [this.ball.body]);
   }
 
   setupEvents() {

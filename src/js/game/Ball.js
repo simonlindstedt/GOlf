@@ -12,7 +12,6 @@ export default class Ball {
     this.sprite.anchor.set(0.5);
     this.sprite.height = r * 2;
     this.sprite.width = r * 2;
-    // this.isInHole = false;
     this.powerDisplay = new Graphics();
     this.powerDisplayRadius = 0;
     this.aimLine = new Graphics();
@@ -73,7 +72,6 @@ export default class Ball {
       Math.abs(this.body.position.y - hole.sprite.position.y) <
         hole.sprite.height
     ) {
-      // this.isInHole = true;
       if (!this.holeConstraint) {
         this.holeConstraint = Constraint.create({
           bodyA: this.body,
@@ -85,7 +83,6 @@ export default class Ball {
         Composite.add(engine.world, this.holeConstraint);
       }
     } else {
-      // this.isInHole = false;
       if (this.holeConstraint) {
         Composite.remove(engine.world, this.holeConstraint);
         this.holeConstraint = undefined;

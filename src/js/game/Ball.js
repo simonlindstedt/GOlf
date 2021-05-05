@@ -5,7 +5,7 @@ import ballSprite from 'url:~src/js/game/assets/textures/ball.png';
 import { Bodies, Vector, Body, Constraint, Composite } from 'matter-js';
 
 export default class Ball {
-  constructor(x, y, r, options) {
+  constructor(x, y, r = 20, options) {
     this.sprite = Sprite.from(Texture.from(ballSprite));
     this.sprite.interactive = true;
     this.sprite.cursor = 'pointer';
@@ -68,14 +68,16 @@ export default class Ball {
 
   isInHole(hole, engine) {
     if (
-      Math.abs(this.body.position.x - hole.x) < hole.radius * 2 &&
-      Math.abs(this.body.position.y - hole.y) < hole.radius * 2
+      Math.abs(this.body.position.x - hole.sprite.position.x) <
+        hole.sprite.height &&
+      Math.abs(this.body.position.y - hole.sprite.position.y) <
+        hole.sprite.height
     ) {
       // this.isInHole = true;
       if (!this.holeConstraint) {
         this.holeConstraint = Constraint.create({
           bodyA: this.body,
-          pointB: { x: hole.x, y: hole.y },
+          pointB: { x: hole.sprite.position.x, y: hole.sprite.position.y },
           stiffness: 0.002,
           length: 0,
         });

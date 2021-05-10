@@ -18,9 +18,9 @@ export default class Game {
       resolution: window.devicePixelRatio,
       backgroundColor: 0x00ff00,
     });
-    // this.viewport = new Viewport({
-    //   interaction: this.app.renderer.plugins.interaction,
-    // });
+    this.viewport = new Viewport({
+      interaction: this.app.renderer.plugins.interaction,
+    });
     this.engine = Matter.Engine.create();
     this.engine.gravity = {
       x: 0,
@@ -34,7 +34,7 @@ export default class Game {
 
   addBodies() {
     for (let i = 0; i < this.map.sprites.length; i++) {
-      this.app.stage.addChild(this.map.sprites[i]);
+      this.viewport.addChild(this.map.sprites[i]);
     }
 
     for (let i = 0; i < this.map.bodies.length; i++) {
@@ -46,7 +46,8 @@ export default class Game {
       this.map.holeSettings.y,
       this.map.holeSettings.r
     );
-    this.app.stage.addChild(this.hole.sprite);
+
+    this.viewport.addChild(this.hole.sprite);
 
     this.ball = new FlatBall(
       this.map.ballSettings.x,
@@ -54,9 +55,10 @@ export default class Game {
       15,
       { restitution: 1 }
     );
-    this.app.stage.addChild(this.ball.graphic);
-    this.app.stage.addChild(this.ball.powerDisplay);
-    this.app.stage.addChild(this.ball.aimLine);
+
+    this.viewport.addChild(this.ball.graphic);
+    this.viewport.addChild(this.ball.powerDisplay);
+    this.viewport.addChild(this.ball.aimLine);
 
     Matter.World.add(this.engine.world, [this.ball.body]);
   }
@@ -67,34 +69,24 @@ export default class Game {
 
     this.ball.graphic.on('mousedown', () => {
       this.ballDown = true;
+      this.viewport.drag({ pressDrag: false });
     });
 
-    this.app.view.addEventListener('mousemove', (e) => {
+    this.viewport.on('pointermove', (e) => {
       this.mousePos = {
-        x: e.offsetX / this.app.stage.scale.x,
-        y: e.offsetY / this.app.stage.scale.y,
+        x: e.data.global.x / this.viewport.scale.x + this.viewport.corner.x,
+        y: e.data.global.y / this.viewport.scale.x + this.viewport.corner.y,
       };
       this.ball.distanceFromMouse(this.mousePos);
     });
 
-    this.app.view.addEventListener('mouseup', () => {
+    this.viewport.on('mouseup', () => {
       if (this.ballDown) {
         this.ballDown = false;
         this.ball.shoot(this.mousePos);
+        this.viewport.drag({ pressDrag: true });
       }
     });
-
-    // const zoomIn = document.querySelector('button#zoomIn');
-    // const zoomOut = document.querySelector('button#zoomOut');
-
-    // zoomIn.addEventListener('click', () => {
-    //   this.app.stage.scale.x *= 1.5;
-    //   this.app.stage.scale.y *= 1.5;
-    // });
-    // zoomOut.addEventListener('click', () => {
-    //   this.app.stage.scale.x /= 1.5;
-    //   this.app.stage.scale.y /= 1.5;
-    // });
 
     window.addEventListener('resize', () => {
       this.handleResize();
@@ -106,8 +98,9 @@ export default class Game {
     const gameWrapper = document.querySelector('div#game-wrapper');
     const renderWrapper = document.querySelector('div#render-wrapper');
     gameWrapper.appendChild(this.app.view);
-    // this.app.stage.addChild(this.viewport);
-    // this.viewport.drag().pinch().wheel().decelerate();
+    this.app.stage.addChild(this.viewport);
+    this.viewport.drag().pinch().wheel().decelerate();
+
     // const disableDrag = (t) => {
     //   if (t.ballDown) {
     //     t.viewport.drag({ pressDrag: false });
@@ -138,7 +131,6 @@ export default class Game {
       Matter.Render.run(debugRenderer);
       if (stats) debugRenderer.options.showDebug = true;
     }
-    this.handleResize();
     this.app.ticker.add(() => {
       this.update();
     });
@@ -146,15 +138,15 @@ export default class Game {
 
   handleResize() {
     const parent = this.app.view.parentNode;
-    const ratio = Math.min(
-      parent.clientWidth / this.width,
-      parent.clientHeight / this.height
-    );
-    this.app.stage.scale.x = this.app.stage.scale.y = ratio;
-    this.app.renderer.resize(
-      Math.ceil(this.width * ratio),
-      Math.ceil(this.height * ratio)
-    );
+    // const ratio = Math.min(
+    //   parent.clientWidth / this.width,
+    //   parent.clientHeight / this.height
+    // );
+    // this.app.stage.scale.x = this.app.stage.scale.y = ratio;
+    // this.app.renderer.resize(
+    //   Math.ceil(this.width * ratio),
+    //   Math.ceil(this.height * ratio)
+    // );
     this.app.renderer.resize(parent.clientWidth, parent.clientHeight);
   }
 

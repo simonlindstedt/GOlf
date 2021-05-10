@@ -44,13 +44,6 @@ export default class Game {
     );
     this.app.stage.addChild(this.hole.sprite);
 
-    // this.ball = new Ball(this.map.ballSettings.x, this.map.ballSettings.x, 20, {
-    //   restitution: 1,
-    // });
-    // this.app.stage.addChild(this.ball.sprite);
-    // this.app.stage.addChild(this.ball.powerDisplay);
-    // this.app.stage.addChild(this.ball.aimLine);
-
     this.ball = new FlatBall(
       this.map.ballSettings.x,
       this.map.ballSettings.y,
@@ -65,13 +58,11 @@ export default class Game {
   }
 
   setupEvents() {
-    // this.mouseDown = false;
     this.ballDown = false;
     this.mousePos = { x: 0, y: 0 };
 
     this.ball.graphic.on('mousedown', () => {
       this.ballDown = true;
-      this.ball.mouseDown = true;
     });
 
     this.app.view.addEventListener('mousemove', (e) => {

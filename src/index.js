@@ -1,7 +1,9 @@
 import Game from './js/game/Game';
 
-const debug = true;
+const gameWrapper = document.querySelector('div#game-wrapper');
+
+const debug = false;
 const stats = false;
-const game = new Game(800, 800);
+const game = new Game(gameWrapper.clientWidth, gameWrapper.clientHeight);
 
 game.start(debug, stats);

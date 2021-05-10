@@ -1,12 +1,9 @@
 import Matter from 'matter-js';
 import Ball from './Ball';
-import Wall from './Wall';
 import * as PIXI from 'pixi.js';
-import { Sprite, Texture } from 'pixi.js';
-import grassImage from 'url:~src/js/game/assets/textures/grass.jpeg';
 import Hole from './Hole.js';
 import Map from './Map';
-import Level from './Level';
+import FlatBall from './FlatBall';
 
 export default class Game {
   constructor(w, h) {
@@ -47,10 +44,20 @@ export default class Game {
     );
     this.app.stage.addChild(this.hole.sprite);
 
-    this.ball = new Ball(this.map.ballSettings.x, this.map.ballSettings.x, 20, {
-      restitution: 1,
-    });
-    this.app.stage.addChild(this.ball.sprite);
+    // this.ball = new Ball(this.map.ballSettings.x, this.map.ballSettings.x, 20, {
+    //   restitution: 1,
+    // });
+    // this.app.stage.addChild(this.ball.sprite);
+    // this.app.stage.addChild(this.ball.powerDisplay);
+    // this.app.stage.addChild(this.ball.aimLine);
+
+    this.ball = new FlatBall(
+      this.map.ballSettings.x,
+      this.map.ballSettings.y,
+      15,
+      { restitution: 1 }
+    );
+    this.app.stage.addChild(this.ball.graphic);
     this.app.stage.addChild(this.ball.powerDisplay);
     this.app.stage.addChild(this.ball.aimLine);
 
@@ -58,27 +65,61 @@ export default class Game {
   }
 
   setupEvents() {
-    this.mouseDown = false;
+    // this.mouseDown = false;
+    this.ballDown = false;
     this.mousePos = { x: 0, y: 0 };
 
-    window.addEventListener('mousedown', () => {
-      this.mouseDown = true;
+    this.ball.graphic.on('mousedown', () => {
+      this.ballDown = true;
+      this.ball.mouseDown = true;
     });
 
-    window.addEventListener('mousemove', (e) => {
-      this.mousePos.x = e.x;
-      this.mousePos.y = e.y;
+    this.app.view.addEventListener('mousemove', (e) => {
+      this.mousePos = {
+        x: e.offsetX / this.app.stage.scale.x,
+        y: e.offsetY / this.app.stage.scale.y,
+      };
       this.ball.distanceFromMouse(this.mousePos);
     });
 
-    window.addEventListener('mouseup', () => {
-      this.mouseDown = false;
-      this.ball.shoot(this.mousePos);
+    this.app.view.addEventListener('mouseup', () => {
+      if (this.ballDown) {
+        this.ballDown = false;
+        this.ball.shoot(this.mousePos);
+      }
+    });
+
+    const zoomIn = document.querySelector('button#zoomIn');
+    const zoomOut = document.querySelector('button#zoomOut');
+
+    zoomIn.addEventListener('click', () => {
+      this.app.stage.scale.x *= 1.5;
+      this.app.stage.scale.y *= 1.5;
+    });
+    zoomOut.addEventListener('click', () => {
+      this.app.stage.scale.x /= 1.5;
+      this.app.stage.scale.y /= 1.5;
+    });
+
+    window.addEventListener('resize', () => {
+      const parent = this.app.view.parentNode;
+      const ratio = Math.min(
+        parent.clientWidth / this.width,
+        parent.clientHeight / this.height
+      );
+      this.app.stage.scale.x = this.app.stage.scale.y = ratio;
+      // this.app.renderer.resize(
+      //   Math.ceil(this.width * ratio),
+      //   Math.ceil(this.height * ratio)
+      // );
+      this.app.renderer.resize(parent.clientWidth, parent.clientHeight);
     });
   }
 
   start(debug, stats) {
-    document.body.appendChild(this.app.view);
+    // document.body.appendChild(this.app.view);
+    const gameWrapper = document.querySelector('div#game-wrapper');
+    gameWrapper.appendChild(this.app.view);
     if (debug) {
       const debugRenderer = Matter.Render.create({
         engine: this.engine,
@@ -100,7 +141,7 @@ export default class Game {
   update() {
     Matter.Engine.update(this.engine);
     this.ball.moveBall();
-    this.ball.drawAimDisplay(this.mousePos, this.mouseDown);
+    this.ball.drawAimDisplay(this.mousePos, this.ballDown);
     this.ball.isInHole(this.hole, this.engine);
   }
 }

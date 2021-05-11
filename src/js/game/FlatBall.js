@@ -1,8 +1,5 @@
-import { Texture } from '@pixi/core';
 import { Graphics } from '@pixi/graphics';
-import { Sprite } from '@pixi/sprite';
 import { Bodies, Vector, Body, Constraint, Composite } from 'matter-js';
-import ballSprite from 'url:~src/js/game/assets/textures/ball.png';
 import { DropShadowFilter } from 'pixi-filters';
 
 export default class FlatBall {

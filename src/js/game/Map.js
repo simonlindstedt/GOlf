@@ -1,5 +1,5 @@
 import { World, Composite } from 'matter-js';
-import PIXI, { Sprite, Texture } from 'pixi.js';
+import { Sprite, Texture } from 'pixi.js';
 import wallPng from 'url:~src/js/game/assets/textures/white.png';
 import maps from './assets/maps.json';
 import Wall from './Wall';

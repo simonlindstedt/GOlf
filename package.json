@@ -11,7 +11,7 @@
   "scripts": {
     "start": "parcel serve --port 4000 ./src/index.html",
     "build": "parcel build ./src/index.html",
-    "serve": "npx servor ./src index.html 4000 --reload",
+    "serve": "npx servor ./dist index.html 4000 --reload",
     "clean": "rm -rf .parcel-cache && rm -rf dist"
   },
   "prettier": {

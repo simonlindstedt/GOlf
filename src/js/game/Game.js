@@ -38,7 +38,8 @@ export default class Game {
     }
 
     for (let i = 0; i < this.map.bodies.length; i++) {
-      Matter.World.add(this.engine.world, [this.map.bodies[i]]);
+      // Matter.World.add(this.engine.world, [this.map.bodies[i]]);
+      Matter.Composite.add(this.engine.world, [this.map.bodies[i]]);
     }
 
     this.hole = new Hole(
@@ -60,27 +61,28 @@ export default class Game {
     this.viewport.addChild(this.ball.powerDisplay);
     this.viewport.addChild(this.ball.aimLine);
 
-    Matter.World.add(this.engine.world, [this.ball.body]);
+    // Matter.World.add(this.engine.world, [this.ball.body]);
+    Matter.Composite.add(this.engine.world, [this.ball.body]);
   }
 
   setupEvents() {
     this.ballDown = false;
     this.mousePos = { x: 0, y: 0 };
 
-    this.ball.graphic.on('mousedown', () => {
+    this.ball.graphic.on('pointerdown', () => {
       this.ballDown = true;
       this.viewport.drag({ pressDrag: false });
     });
 
     this.viewport.on('pointermove', (e) => {
       this.mousePos = {
-        x: e.data.global.x / this.viewport.scale.x + this.viewport.corner.x,
-        y: e.data.global.y / this.viewport.scale.x + this.viewport.corner.y,
+        x: e.data.global.x / this.viewport.scaled + this.viewport.corner.x,
+        y: e.data.global.y / this.viewport.scaled + this.viewport.corner.y,
       };
       this.ball.distanceFromMouse(this.mousePos);
     });
 
-    this.viewport.on('mouseup', () => {
+    this.viewport.on('pointerup', () => {
       if (this.ballDown) {
         this.ballDown = false;
         this.ball.shoot(this.mousePos);
@@ -99,6 +101,10 @@ export default class Game {
     const renderWrapper = document.querySelector('div#render-wrapper');
     gameWrapper.appendChild(this.app.view);
     this.app.stage.addChild(this.viewport);
+    this.viewport.clampZoom({
+      minScale: 0.5,
+      maxScale: 2,
+    });
     this.viewport.drag().pinch().wheel().decelerate();
 
     // const disableDrag = (t) => {

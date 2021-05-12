@@ -2,7 +2,7 @@ import { Graphics } from '@pixi/graphics';
 import { Bodies, Vector, Body, Constraint, Composite } from 'matter-js';
 import { DropShadowFilter } from 'pixi-filters';
 
-export default class FlatBall {
+export default class Ball {
   constructor(x, y, r, options) {
     this.graphic = new Graphics();
     this.shadow = new DropShadowFilter({

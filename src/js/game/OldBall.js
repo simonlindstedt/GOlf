@@ -1,29 +1,28 @@
+import { Texture } from '@pixi/core';
 import { Graphics } from '@pixi/graphics';
+import { Sprite } from '@pixi/sprite';
+import ballSprite from 'url:~src/js/game/assets/textures/ball.png';
 import { Bodies, Vector, Body, Constraint, Composite } from 'matter-js';
-import { DropShadowFilter } from 'pixi-filters';
 
-export default class FlatBall {
-  constructor(x, y, r, options) {
-    this.graphic = new Graphics();
-    this.shadow = new DropShadowFilter({
-      alpha: 0.4,
-      distance: 2,
-      blur: 2,
-      rotation: 45,
-    });
-    this.graphic.filters = [this.shadow];
+export default class Ball {
+  constructor(x, y, r = 20, options) {
+    this.sprite = Sprite.from(Texture.from(ballSprite));
+    this.sprite.interactive = true;
+    this.sprite.cursor = 'pointer';
+    this.sprite.anchor.set(0.5);
+    this.sprite.height = r * 2;
+    this.sprite.width = r * 2;
     this.powerDisplay = new Graphics();
+    this.powerDisplayRadius = 0;
     this.aimLine = new Graphics();
-    this.graphic.interactive = true;
-    this.graphic.cursor = 'pointer';
-    this.mouseDown = false;
-    this.body = Bodies.circle(x, y, r, options);
     this.holeConstraint = undefined;
+    this.body = Bodies.circle(x, y, r, options);
     this.distance = {
       current: 0,
       max: 120,
     };
   }
+
   shoot(mousePos) {
     let targetAngle = Vector.angle(this.body.position, {
       x: mousePos.x,
@@ -55,6 +54,17 @@ export default class FlatBall {
     }
   }
 
+  distanceFromMouse(mousePos) {
+    this.distance.current = Math.sqrt(
+      Math.pow(this.body.position.x - mousePos.x, 2) +
+        Math.pow(this.body.position.y - mousePos.y, 2)
+    );
+    if (this.distance.current >= this.distance.max) {
+      this.distance.current = this.distance.max;
+    }
+    this.powerDisplayRadius = this.distance.current;
+  }
+
   isInHole(hole, engine) {
     if (
       Math.abs(this.body.position.x - hole.sprite.position.x) <
@@ -80,24 +90,9 @@ export default class FlatBall {
     }
   }
 
-  distanceFromMouse(mousePos) {
-    this.distance.current = Math.sqrt(
-      Math.pow(this.body.position.x - mousePos.x, 2) +
-        Math.pow(this.body.position.y - mousePos.y, 2)
-    );
-    if (this.distance.current >= this.distance.max) {
-      this.distance.current = this.distance.max;
-    }
-    this.powerDisplayRadius = this.distance.current;
-  }
-
   moveBall() {
-    this.graphic.clear();
-    this.graphic.beginFill(0xffffff);
-    this.graphic.drawCircle(
-      this.body.position.x,
-      this.body.position.y,
-      this.body.circleRadius
-    );
+    this.sprite.x = this.body.position.x;
+    this.sprite.y = this.body.position.y;
+    this.sprite.rotation = this.body.angle;
   }
 }

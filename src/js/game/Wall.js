@@ -1,5 +1,5 @@
 import Matter from 'matter-js';
-import PIXI, { Sprite, Texture } from 'pixi.js';
+import { Sprite, Texture } from 'pixi.js';
 import wallPng from 'url:~src/js/game/assets/textures/white.png';
 
 export default class Wall {

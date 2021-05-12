@@ -1,19 +1,21 @@
 {
   "private": true,
-  "dependencies": {
-    "matter-js": "^0.17.1",
-    "pixi-particles": "^4.3.0",
-    "pixi.js": "^6.0.2",
-    "prettier": "^2.2.1"
-  },
   "scripts": {
     "start": "parcel serve --port 4000 ./src/index.html",
     "build": "parcel build ./src/index.html",
-    "serve": "npx servor ./src index.html 4000 --reload",
+    "serve": "npx servor ./dist index.html 4000 --reload",
     "clean": "rm -rf .parcel-cache && rm -rf dist"
   },
   "prettier": {
     "singleQuote": true
+  },
+  "dependencies": {
+    "matter-js": "^0.17.1",
+    "pixi-filters": "^4.1.0",
+    "pixi-particles": "^4.3.0",
+    "pixi-viewport": "^4.31.0",
+    "pixi.js": "^6.0.2",
+    "prettier": "^2.2.1"
   },
   "devDependencies": {
     "@parcel/transformer-image": "^2.0.0-beta.2",

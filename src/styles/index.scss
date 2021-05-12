@@ -2,10 +2,30 @@
   box-sizing: border-box;
 }
 
-body {
+body,
+html {
+  width: 100%;
+  height: 100%;
   margin: 0;
 }
 
-canvas {
-  position: absolute;
+#game-wrapper {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
+
+// canvas,
+// .game-wrapper {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+// }
+
+// #render-wrapper canvas {
+//   pointer-events: none;
+// }
+
+// #render-wrapper {
+//   pointer-events: none;
+// }

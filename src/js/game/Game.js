@@ -71,7 +71,7 @@ export default class Game {
 
     this.ball.graphic.on('pointerdown', () => {
       this.ballDown = true;
-      this.viewport.drag({ pressDrag: false });
+      this.viewport.plugins.pause('drag');
     });
 
     this.viewport.on('pointermove', (e) => {
@@ -86,7 +86,7 @@ export default class Game {
       if (this.ballDown) {
         this.ballDown = false;
         this.ball.shoot(this.mousePos);
-        this.viewport.drag({ pressDrag: true });
+        this.viewport.plugins.resume('drag');
       }
     });
 

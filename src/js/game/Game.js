@@ -1,9 +1,9 @@
 import Matter from 'matter-js';
-import Ball from './Ball';
 import * as PIXI from 'pixi.js';
+import { Viewport } from 'pixi-viewport';
+import Ball from './Ball';
 import Hole from './Hole.js';
 import Map from './Map';
-import { Viewport } from 'pixi-viewport';
 import Wall from './Wall';
 
 export default class Game {
@@ -78,6 +78,7 @@ export default class Game {
 
     this.viewport.on('pointermove', (e) => {
       this.mousePos = {
+        // Mouse coords relative to gameworld/viewport
         x: e.data.global.x / this.viewport.scaled + this.viewport.corner.x,
         y: e.data.global.y / this.viewport.scaled + this.viewport.corner.y,
       };
@@ -128,20 +129,6 @@ export default class Game {
       this.update();
     });
   }
-
-  // handleResize() {
-  //   const parent = this.app.view.parentNode;
-  //   // const ratio = Math.min(
-  //   //   parent.clientWidth / this.width,
-  //   //   parent.clientHeight / this.height
-  //   // );
-  //   // this.app.stage.scale.x = this.app.stage.scale.y = ratio;
-  //   // this.app.renderer.resize(
-  //   //   Math.ceil(this.width * ratio),
-  //   //   Math.ceil(this.height * ratio)
-  //   // );
-  //   this.app.renderer.resize(parent.clientWidth, parent.clientHeight);
-  // }
 
   update() {
     Matter.Engine.update(this.engine);

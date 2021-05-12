@@ -1,17 +1,23 @@
-import { World, Composite } from 'matter-js';
-import { Sprite, Texture } from 'pixi.js';
-import wallPng from 'url:~src/js/game/assets/textures/white.png';
 import maps from './assets/maps.json';
 import Wall from './Wall';
-import Hole from './Hole';
-import Ball from './ball';
 
 export default class Map {
-  constructor() {
-    this.bodies = [];
-    this.sprites = [];
-    this.ballSettings;
-    this.holeSettings;
+  constructor(map) {
+    this.coords = maps[`map${map}`];
+    // this.walls = this.data.walls;
+    // this.holeSettings = {
+    //   x: this.data.hole.x,
+    //   y: this.data.hole.y,
+    //   r: this.data.hole.r,
+    // };
+    // this.ballSettings = {
+    //   x: this.data.start.x,
+    //   y: this.data.start.y,
+    // };
+    // this.bodies = [];
+    // this.sprites = [];
+    // this.ballSettings;
+    // this.holeSettings;
   }
 
   renderMap(level) {

@@ -2,6 +2,7 @@ import Game from './../game/Game';
 import StartMenu from './StartMenu';
 import SelectMap from './SelectMap';
 import PauseMenu from './PauseMenu';
+import PauseButton from './PauseButton';
 import GameWrapper from './GameWrapper';
 
 export default class Interface {
@@ -11,6 +12,7 @@ export default class Interface {
       startMenu: new StartMenu(),
       selectMap: new SelectMap(),
       pauseMenu: new PauseMenu(),
+      pauseButton: new PauseButton(),
       gameWrapper: new GameWrapper(),
     };
   }
@@ -26,7 +28,16 @@ export default class Interface {
         e.target.dataset.map
       );
       this.game.start(false, false);
-      this.components.pauseMenu.render(); // click / touch events doesn't workd
+      const clickHandler = () => {
+        if (this.components.pauseMenu.paused) {
+          this.components.pauseMenu.paused = false;
+          this.components.pauseMenu.remove();
+        } else {
+          this.components.pauseMenu.paused = true;
+          this.components.pauseMenu.render();
+        }
+      };
+      this.components.pauseButton.render(clickHandler);
     };
 
     const selectMapScreen = () => {

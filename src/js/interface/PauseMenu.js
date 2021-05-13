@@ -10,6 +10,7 @@ export default class pauseMenu {
     ];
   }
   render() {
+    this.active = true;
     this.section = document.createElement('section');
     this.section.classList.add('pause-container');
     console.log(this.paused);
@@ -25,19 +26,8 @@ export default class pauseMenu {
         this.option.addEventListener('click', option[1]);
       });
       this.section.appendChild(this.menuContainer);
+      this.parent.appendChild(this.section);
     }
-
-    console.log('gothere');
-    this.pauseButton = document.createElement('button');
-    this.pauseButton.classList.add('pause-button');
-    this.section.appendChild(this.pauseButton);
-    this.parent.appendChild(this.section);
-
-    this.pauseButton.addEventListener('click', () => {
-      this.paused ? (this.paused = false) : (this.paused = true);
-      this.remove();
-      this.render();
-    });
   }
   remove() {
     this.section.remove();

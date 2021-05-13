@@ -1,4 +1,4 @@
-export default class selectMap {
+export default class pauseMenu {
   constructor() {
     this.active = false;
     this.parent = document.querySelector('main#app-container');

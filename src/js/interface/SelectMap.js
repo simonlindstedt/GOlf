@@ -2,7 +2,7 @@ export default class selectMap {
   constructor() {
     this.active = false;
     this.parent = document.querySelector('main#app-container');
-    this.levelCount = 9;
+    this.levelCount = 2;
     this.levels = [];
   }
   render(mapClick) {

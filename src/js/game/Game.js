@@ -144,4 +144,11 @@ export default class Game {
       this.load(this.level);
     }
   }
+
+  clear() {
+    this.viewport.removeChildren();
+    Matter.Composite.clear(this.engine.world);
+    this.app.destroy();
+    document.querySelector('#game-wrapper').remove();
+  }
 }

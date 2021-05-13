@@ -8,6 +8,26 @@ import GameWrapper from './GameWrapper';
 export default class Interface {
   constructor() {
     this.parent = document.querySelector('main#app-container');
+
+    this.menuOptions = [
+      [
+        'Resume',
+        () => {
+          this.components.pauseMenu.paused = false;
+          this.components.pauseMenu.remove();
+        },
+      ],
+      [
+        'To start',
+        () => {
+          this.clear();
+          this.game.clear();
+          this.init();
+        },
+      ],
+      ['option3', () => console.log('option3')],
+    ];
+
     this.components = {
       startMenu: new StartMenu(),
       selectMap: new SelectMap(),
@@ -20,7 +40,6 @@ export default class Interface {
     this.clear();
 
     const loadMap = (e) => {
-      console.log(this.components);
       this.components.selectMap.remove();
       this.components.gameWrapper.render();
       this.game = new Game(
@@ -37,6 +56,7 @@ export default class Interface {
           this.components.pauseMenu.render();
         }
       };
+      this.components.pauseMenu.options = this.menuOptions;
       this.components.pauseButton.render(clickHandler);
     };
 

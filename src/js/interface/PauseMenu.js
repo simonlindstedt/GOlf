@@ -1,13 +1,9 @@
 export default class pauseMenu {
-  constructor() {
+  constructor(options = []) {
     this.active = false;
     this.parent = document.querySelector('main#app-container');
     this.paused = false;
-    this.options = [
-      ['option1', () => console.log('option1')],
-      ['option2', () => console.log('option2')],
-      ['option3', () => console.log('option3')],
-    ];
+    this.options = options;
   }
   render() {
     this.active = true;

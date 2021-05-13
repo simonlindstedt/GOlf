@@ -1,15 +1,17 @@
 import Matter from 'matter-js';
-import Ball from './Ball';
 import * as PIXI from 'pixi.js';
+import { Viewport } from 'pixi-viewport';
+import Ball from './Ball';
 import Hole from './Hole.js';
 import Map from './Map';
-import FlatBall from './FlatBall';
-import { Viewport } from 'pixi-viewport';
+import Wall from './Wall';
 
 export default class Game {
-  constructor(w, h) {
-    this.width = w;
-    this.height = h;
+  constructor(parentElement, level) {
+    this.parentElement = parentElement;
+    this.width = this.parentElement.clientWidth;
+    this.height = this.parentElement.clientHeight;
+    this.level = level;
     this.app = new PIXI.Application({
       width: this.width,
       height: this.height,
@@ -26,46 +28,46 @@ export default class Game {
       x: 0,
       y: 0,
     };
-    this.map = new Map();
-    this.map.renderMap('1');
+    this.load();
+  }
+
+  load() {
+    // Clear
+    this.viewport.removeChildren();
+    Matter.Composite.clear(this.engine.world);
+
+    // Load graphics, bodies and setup events
+    this.map = new Map(this.level);
     this.addBodies();
-    this.setupEvents();
+    this.setupGameEvents();
   }
 
   addBodies() {
-    for (let i = 0; i < this.map.sprites.length; i++) {
-      this.viewport.addChild(this.map.sprites[i]);
-    }
-
-    for (let i = 0; i < this.map.bodies.length; i++) {
-      // Matter.World.add(this.engine.world, [this.map.bodies[i]]);
-      Matter.Composite.add(this.engine.world, [this.map.bodies[i]]);
-    }
-
+    // Walls / Bounds
+    this.map.coords.walls.forEach((w) => {
+      const wall = new Wall(w.x, w.y, w.w, w.h);
+      this.viewport.addChild(wall.sprite);
+      Matter.Composite.add(this.engine.world, [wall.body]);
+    });
+    // Hole
     this.hole = new Hole(
-      this.map.holeSettings.x,
-      this.map.holeSettings.y,
-      this.map.holeSettings.r
+      this.map.coords.hole.x,
+      this.map.coords.hole.y,
+      this.map.coords.hole.r
     );
-
     this.viewport.addChild(this.hole.sprite);
-
-    this.ball = new FlatBall(
-      this.map.ballSettings.x,
-      this.map.ballSettings.y,
-      15,
-      { restitution: 1 }
-    );
-
+    // Ball
+    this.ball = new Ball(this.map.coords.start.x, this.map.coords.start.y, 20, {
+      restitution: 1,
+    });
     this.viewport.addChild(this.ball.graphic);
     this.viewport.addChild(this.ball.powerDisplay);
     this.viewport.addChild(this.ball.aimLine);
-
-    // Matter.World.add(this.engine.world, [this.ball.body]);
     Matter.Composite.add(this.engine.world, [this.ball.body]);
   }
 
-  setupEvents() {
+  setupGameEvents() {
+    // clear events on each mapload?
     this.ballDown = false;
     this.mousePos = { x: 0, y: 0 };
 
@@ -76,6 +78,7 @@ export default class Game {
 
     this.viewport.on('pointermove', (e) => {
       this.mousePos = {
+        // Mouse coords relative to gameworld/viewport
         x: e.data.global.x / this.viewport.scaled + this.viewport.corner.x,
         y: e.data.global.y / this.viewport.scaled + this.viewport.corner.y,
       };
@@ -89,40 +92,25 @@ export default class Game {
         this.viewport.plugins.resume('drag');
       }
     });
-
-    window.addEventListener('resize', () => {
-      this.handleResize();
-    });
   }
 
   start(debug, stats) {
-    // document.body.appendChild(this.app.view);
-    const gameWrapper = document.querySelector('div#game-wrapper');
     const renderWrapper = document.querySelector('div#render-wrapper');
-    gameWrapper.appendChild(this.app.view);
+    this.parentElement.appendChild(this.app.view);
     this.app.stage.addChild(this.viewport);
     this.viewport.clampZoom({
       minScale: 0.5,
       maxScale: 2,
     });
+
     this.viewport.drag().pinch().wheel().decelerate();
 
-    // const disableDrag = (t) => {
-    //   if (t.ballDown) {
-    //     t.viewport.drag({ pressDrag: false });
-    //   }
-    // };
-    // const enableDrag = (t) => {
-    //   if (!t.ballDown) {
-    //     t.viewport.drag({ pressDrag: true });
-    //   }
-    // };
-    // gameWrapper.addEventListener('mousedown', (e) => {
-    //   disableDrag(this);
-    // });
-    // gameWrapper.addEventListener('mouseup', (e) => {
-    //   enableDrag(this);
-    // });
+    window.addEventListener('resize', () => {
+      this.app.renderer.resize(
+        this.parentElement.clientWidth,
+        this.parentElement.clientHeight
+      );
+    });
 
     if (debug) {
       const debugRenderer = Matter.Render.create({
@@ -142,24 +130,18 @@ export default class Game {
     });
   }
 
-  handleResize() {
-    const parent = this.app.view.parentNode;
-    // const ratio = Math.min(
-    //   parent.clientWidth / this.width,
-    //   parent.clientHeight / this.height
-    // );
-    // this.app.stage.scale.x = this.app.stage.scale.y = ratio;
-    // this.app.renderer.resize(
-    //   Math.ceil(this.width * ratio),
-    //   Math.ceil(this.height * ratio)
-    // );
-    this.app.renderer.resize(parent.clientWidth, parent.clientHeight);
-  }
-
   update() {
     Matter.Engine.update(this.engine);
     this.ball.moveBall();
     this.ball.drawAimDisplay(this.mousePos, this.ballDown);
     this.ball.isInHole(this.hole, this.engine);
+    if (this.ball.inHole) {
+      this.level += 1;
+      if (this.level > 2) {
+        this.level = 1;
+      }
+      // window.localStorage.level = this.level;
+      this.load(this.level);
+    }
   }
 }

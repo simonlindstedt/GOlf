@@ -4,6 +4,7 @@ import SelectMap from './SelectMap';
 import PauseMenu from './PauseMenu';
 import PauseButton from './PauseButton';
 import GameWrapper from './GameWrapper';
+import Map from '../game/Map';
 
 export default class Interface {
   constructor() {
@@ -66,7 +67,8 @@ export default class Interface {
         'click',
         selectMapScreen
       );
-      this.components.selectMap.render(loadMap);
+      //Room for optimizations due to duplicate maps.json import
+      this.components.selectMap.render(loadMap, new Map(1).mapCount);
     };
 
     this.components.startMenu.render();

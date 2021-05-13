@@ -2,10 +2,9 @@ export default class selectMap {
   constructor() {
     this.active = false;
     this.parent = document.querySelector('main#app-container');
-    this.levelCount = 2;
     this.levels = [];
   }
-  render(mapClick) {
+  render(mapClick, levelCount) {
     this.mapClick = mapClick;
     this.section = document.createElement('section');
     this.section.classList.add('select-map-container');
@@ -17,7 +16,7 @@ export default class selectMap {
     this.heading.textContent = 'Select map';
     this.heading.classList.add('select-map');
 
-    for (let i = 0; i < this.levelCount; i++) {
+    for (let i = 0; i < levelCount; i++) {
       const mapButton = document.createElement('button');
       mapButton.dataset.map = mapButton.textContent = i + 1;
       mapButton.addEventListener('click', this.mapClick);

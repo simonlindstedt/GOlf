@@ -1,6 +1,7 @@
 import Game from './../game/Game';
 import StartMenu from './StartMenu';
 import SelectMap from './SelectMap';
+import PauseMenu from './PauseMenu';
 
 export default class Interface {
   constructor() {
@@ -8,7 +9,7 @@ export default class Interface {
     this.components = {
       startMenu: new StartMenu(),
       selectMap: new SelectMap(),
-      //   PauseMenu: new PauseMenu(),
+      pauseMenu: new PauseMenu(),
     };
   }
   init() {
@@ -27,6 +28,7 @@ export default class Interface {
         this.parent.appendChild(gameWrapper);
         const game = new Game(gameWrapper, e.target.dataset.map);
         game.start(false, false);
+        this.components.pauseMenu.render();
       });
     };
     this.components.startMenu.render();

@@ -5,6 +5,7 @@ export default class pauseButton {
     this.paused = false;
   }
   render(clickHandler) {
+    this.active = true;
     this.pauseButton = document.createElement('button');
     this.pauseButton.classList.add('pause-button');
     document.body.appendChild(this.pauseButton);
@@ -12,7 +13,7 @@ export default class pauseButton {
     this.pauseButton.addEventListener('click', clickHandler);
   }
   remove() {
-    this.section.remove();
+    this.pauseButton.remove();
     this.active = false;
   }
 }

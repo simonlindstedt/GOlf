@@ -9,9 +9,7 @@ export default class pauseMenu {
     this.active = true;
     this.section = document.createElement('section');
     this.section.classList.add('pause-container');
-    console.log(this.paused);
     if (this.paused) {
-      console.log(`Paused: ${this.paused}`);
       this.menuContainer = document.createElement('div');
       this.menuContainer.classList.add('menu-container');
       this.options.forEach((option) => {
@@ -28,5 +26,6 @@ export default class pauseMenu {
   remove() {
     this.section.remove();
     this.active = false;
+    this.paused = false;
   }
 }

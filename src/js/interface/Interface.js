@@ -15,6 +15,7 @@ export default class Interface {
         'Resume',
         () => {
           this.components.pauseMenu.paused = false;
+          this.game.paused = false;
           this.components.pauseMenu.remove();
         },
       ],
@@ -51,9 +52,11 @@ export default class Interface {
       const clickHandler = () => {
         if (this.components.pauseMenu.paused) {
           this.components.pauseMenu.paused = false;
+          this.game.paused = false;
           this.components.pauseMenu.remove();
         } else {
           this.components.pauseMenu.paused = true;
+          this.game.paused = true;
           this.components.pauseMenu.render();
         }
       };
@@ -90,14 +93,3 @@ export default class Interface {
     });
   }
 }
-
-// (e) => {
-// console.log(e.target.dataset.map);
-// this.components.selectMap.remove();
-// const gameWrapper = document.createElement('div');
-// gameWrapper.id = 'game-wrapper';
-// this.parent.appendChild(gameWrapper);
-// const game = new Game(gameWrapper, e.target.dataset.map);
-// game.start(false, false);
-// this.components.pauseMenu.render();
-// }

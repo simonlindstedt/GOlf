@@ -28,6 +28,7 @@ export default class Game {
       x: 0,
       y: 0,
     };
+    this.paused = false;
     this.load();
   }
 
@@ -131,17 +132,19 @@ export default class Game {
   }
 
   update() {
-    Matter.Engine.update(this.engine);
-    this.ball.moveBall();
-    this.ball.drawAimDisplay(this.mousePos, this.ballDown);
-    this.ball.isInHole(this.hole, this.engine);
-    if (this.ball.inHole) {
-      this.level += 1;
-      if (this.level > 2) {
-        this.level = 1;
+    if (!this.paused) {
+      Matter.Engine.update(this.engine);
+      this.ball.moveBall();
+      this.ball.drawAimDisplay(this.mousePos, this.ballDown);
+      this.ball.isInHole(this.hole, this.engine);
+      if (this.ball.inHole) {
+        this.level += 1;
+        if (this.level > 2) {
+          this.level = 1;
+        }
+        // window.localStorage.level = this.level;
+        this.load(this.level);
       }
-      // window.localStorage.level = this.level;
-      this.load(this.level);
     }
   }
 

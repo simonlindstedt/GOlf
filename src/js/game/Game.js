@@ -31,6 +31,7 @@ export default class Game {
     };
     this.paused = false;
     this.winScreen = new WinScreen();
+    this.strikes = 0;
     this.load();
   }
 
@@ -96,6 +97,7 @@ export default class Game {
       if (this.ballDown) {
         this.ballDown = false;
         this.ball.shoot(this.mousePos);
+        this.strikes++;
         this.viewport.plugins.resume('drag');
       }
     });
@@ -103,7 +105,7 @@ export default class Game {
 
   showWinScreen() {
     this.paused = true;
-    this.winScreen.render();
+    this.winScreen.render(this.strikes);
   }
 
   start(debug, stats) {
@@ -161,6 +163,7 @@ export default class Game {
     }
     if (this.winScreen.continue) {
       this.paused = false;
+      this.strikes = 0;
       this.level++;
       // window.localStorage.level = this.level
       this.load(this.level);

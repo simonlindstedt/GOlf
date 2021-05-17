@@ -5,20 +5,21 @@ export default class WinScreen {
     this.continue = false;
   }
 
-  render() {
+  render(score) {
     this.active = true;
     this.section = document.createElement('section');
     this.button = document.createElement('button');
     this.message = document.createElement('h2');
+    this.score = document.createElement('p');
 
     this.section.id = 'win-screen';
     this.button.textContent = 'Next Map';
     this.message.textContent = 'You did it!';
+    this.score.textContent = `Total strikes: ${score}`;
 
     this.section.appendChild(this.message);
+    this.section.appendChild(this.score);
     this.section.appendChild(this.button);
-
-    // event listener
 
     const handleClick = () => {
       this.continue = true;

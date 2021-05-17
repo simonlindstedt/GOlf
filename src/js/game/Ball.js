@@ -72,7 +72,7 @@ export default class Ball {
         });
 
         Composite.add(engine.world, this.holeConstraint);
-        this.inHole = true;
+        // this.inHole = true;
       }
     } else {
       if (this.holeConstraint) {
@@ -80,6 +80,13 @@ export default class Ball {
         this.holeConstraint = undefined;
         this.inHole = false;
       }
+    }
+    if (
+      Math.abs(this.body.position.x - hole.sprite.position.x) < 0.5 &&
+      Math.abs(this.body.position.y - hole.sprite.position.y) < 0.5 &&
+      this.body.speed < 0.4
+    ) {
+      this.inHole = true;
     }
   }
 

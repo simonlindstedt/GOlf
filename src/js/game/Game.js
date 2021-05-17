@@ -95,6 +95,22 @@ export default class Game {
     });
   }
 
+  showWinScreen() {
+    const winScreen = document.createElement('section');
+    const nextMapButton = document.createElement('button');
+    nextMapButton.textContent = 'Next level';
+    winScreen.id = 'win-screen';
+    winScreen.appendChild(nextMapButton);
+    const handleClick = () => {
+      this.level += 1;
+      this.load(this.level);
+      nextMapButton.removeEventListener('click', handleClick);
+    };
+    nextMapButton.addEventListener('click', handleClick);
+    this.parentElement.appendChild(winScreen);
+    this.paused = true;
+  }
+
   start(debug, stats) {
     const renderWrapper = document.querySelector('div#render-wrapper');
     this.parentElement.appendChild(this.app.view);
@@ -106,12 +122,14 @@ export default class Game {
 
     this.viewport.drag().pinch().wheel().decelerate();
 
-    window.addEventListener('resize', () => {
+    this.handleResize = () => {
       this.app.renderer.resize(
         this.parentElement.clientWidth,
         this.parentElement.clientHeight
       );
-    });
+    };
+
+    window.addEventListener('resize', this.handleResize);
 
     if (debug) {
       const debugRenderer = Matter.Render.create({
@@ -138,12 +156,13 @@ export default class Game {
       this.ball.drawAimDisplay(this.mousePos, this.ballDown);
       this.ball.isInHole(this.hole, this.engine);
       if (this.ball.inHole) {
-        this.level += 1;
-        if (this.level > 2) {
-          this.level = 1;
-        }
-        // window.localStorage.level = this.level;
-        this.load(this.level);
+        this.showWinScreen();
+        // this.level += 1;
+        // if (this.level > 2) {
+        //   this.level = 1;
+        // }
+        // // window.localStorage.level = this.level;
+        // this.load(this.level);
       }
     }
   }
@@ -153,5 +172,6 @@ export default class Game {
     Matter.Composite.clear(this.engine.world);
     this.app.destroy();
     document.querySelector('#game-wrapper').remove();
+    window.removeEventListener('resize', this.handleResize);
   }
 }

@@ -80,10 +80,6 @@ export default class Interface {
       selectMapScreen
     );
   }
-  mapScreen() {
-    this.clear();
-    this.components.selectMap.render();
-  }
 
   clear() {
     Object.keys(this.components).forEach((key) => {

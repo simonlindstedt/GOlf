@@ -95,12 +95,12 @@ button.start-button {
 }
 
 .menu-container {
-  height: 70vh;
-  width: 70vw;
-  max-width: 20rem;
+  height: inherit;
+  width: inherit;
+  // max-width: 20rem;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: center;
   gap: 1rem;
   align-items: center;
   padding: 2rem;

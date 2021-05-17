@@ -20,7 +20,7 @@ export default class Game {
       antialias: true,
       autoDensity: true,
       resolution: window.devicePixelRatio,
-      backgroundColor: 0x00ff00,
+      backgroundAlpha: 0,
     });
     this.viewport = new Viewport({
       interaction: this.app.renderer.plugins.interaction,

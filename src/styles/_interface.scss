@@ -20,22 +20,22 @@ main#app-container {
     background-color: grey;
     border-radius: 8px;
   }
+  #win-screen {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 #game-wrapper {
   overflow: hidden;
   width: 100%;
   height: 100%;
-  #win-screen {
-    position: absolute;
-    display: flex;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
 }
-
 //Select Map
 .select-map-container {
   font-family: 'Courier New', Courier, monospace;

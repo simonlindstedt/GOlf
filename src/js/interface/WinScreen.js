@@ -21,8 +21,6 @@ export default class WinScreen {
     this.section.appendChild(this.score);
     this.section.appendChild(this.button);
 
-    // event listener
-
     const handleClick = () => {
       this.continue = true;
       this.button.removeEventListener('click', handleClick);

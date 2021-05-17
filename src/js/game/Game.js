@@ -5,13 +5,14 @@ import Ball from './Ball';
 import Hole from './Hole.js';
 import Map from './Map';
 import Wall from './Wall';
+import WinScreen from '../interface/WinScreen';
 
 export default class Game {
   constructor(parentElement, level) {
     this.parentElement = parentElement;
     this.width = this.parentElement.clientWidth;
     this.height = this.parentElement.clientHeight;
-    this.level = level;
+    this.level = parseInt(level);
     this.app = new PIXI.Application({
       width: this.width,
       height: this.height,
@@ -29,6 +30,7 @@ export default class Game {
       y: 0,
     };
     this.paused = false;
+    this.winScreen = new WinScreen();
     this.load();
   }
 
@@ -38,6 +40,9 @@ export default class Game {
     Matter.Composite.clear(this.engine.world);
 
     // Load graphics, bodies and setup events
+    if (this.paused) {
+      this.paused = false;
+    }
     this.map = new Map(this.level);
     this.addBodies();
     this.setupGameEvents();
@@ -96,19 +101,8 @@ export default class Game {
   }
 
   showWinScreen() {
-    const winScreen = document.createElement('section');
-    const nextMapButton = document.createElement('button');
-    nextMapButton.textContent = 'Next level';
-    winScreen.id = 'win-screen';
-    winScreen.appendChild(nextMapButton);
-    const handleClick = () => {
-      this.level += 1;
-      this.load(this.level);
-      nextMapButton.removeEventListener('click', handleClick);
-    };
-    nextMapButton.addEventListener('click', handleClick);
-    this.parentElement.appendChild(winScreen);
     this.paused = true;
+    this.winScreen.render();
   }
 
   start(debug, stats) {
@@ -157,13 +151,14 @@ export default class Game {
       this.ball.isInHole(this.hole, this.engine);
       if (this.ball.inHole) {
         this.showWinScreen();
-        // this.level += 1;
-        // if (this.level > 2) {
-        //   this.level = 1;
-        // }
-        // // window.localStorage.level = this.level;
-        // this.load(this.level);
       }
+    }
+    if (this.winScreen.continue) {
+      this.paused = false;
+      this.level++;
+      // window.localStorage.level = this.level
+      this.load(this.level);
+      this.winScreen.remove();
     }
   }
 

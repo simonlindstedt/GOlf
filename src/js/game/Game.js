@@ -12,6 +12,7 @@ export default class Game {
     this.parentElement = parentElement;
     this.width = this.parentElement.clientWidth;
     this.height = this.parentElement.clientHeight;
+    this.walls = [];
     this.level = parseInt(level);
     this.app = new PIXI.Application({
       width: this.width,
@@ -53,7 +54,7 @@ export default class Game {
     // Walls / Bounds
     this.map.coords.walls.forEach((w) => {
       const wall = new Wall(w.x, w.y, w.w, w.h, w.a ?? 0, w.r ?? 0.5, w.s ?? 1);
-      console.log(wall);
+      this.walls.push(wall);
       this.viewport.addChild(wall.sprite);
       Matter.Composite.add(this.engine.world, [wall.body]);
     });
@@ -155,6 +156,7 @@ export default class Game {
     if (!this.paused) {
       Matter.Engine.update(this.engine);
       this.ball.moveBall();
+      this.walls.forEach((wall) => wall.moveWall());
       this.ball.drawAimDisplay(this.mousePos, this.ballDown);
       this.ball.isInHole(this.hole, this.engine);
       if (this.ball.inHole) {

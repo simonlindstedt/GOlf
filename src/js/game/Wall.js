@@ -21,7 +21,7 @@ export default class Wall {
     this.x = x;
     this.y = y;
     this.restitution = restitution;
-    this.isStatic = true;
+    this.isStatic = isStatic;
 
     this.sprite.anchor.set(0.5);
     this.sprite.height = this.height;
@@ -42,5 +42,12 @@ export default class Wall {
         isStatic: this.isStatic,
       }
     );
+  }
+  moveWall() {
+    if (!this.isStatic) {
+      this.sprite.position.x = this.body.position.x;
+      this.sprite.position.y = this.body.position.y;
+      this.sprite.angle = this.body.angle * (180 / Math.PI);
+    }
   }
 }

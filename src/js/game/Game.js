@@ -51,7 +51,8 @@ export default class Game {
   addBodies() {
     // Walls / Bounds
     this.map.coords.walls.forEach((w) => {
-      const wall = new Wall(w.x, w.y, w.w, w.h);
+      const wall = new Wall(w.x, w.y, w.w, w.h, w.a | 0);
+      console.log(wall);
       this.viewport.addChild(wall.sprite);
       Matter.Composite.add(this.engine.world, [wall.body]);
     });
@@ -106,7 +107,12 @@ export default class Game {
   }
 
   start(debug, stats) {
-    const renderWrapper = document.querySelector('div#render-wrapper');
+    const renderWrapper = document.createElement('div');
+    const appContainer = document.querySelector('main#app-container');
+    renderWrapper.style.position = 'absolute';
+    renderWrapper.style.top = '0';
+    renderWrapper.style.pointerEvents = 'none';
+    appContainer.insertAdjacentElement('afterend', renderWrapper);
     this.parentElement.appendChild(this.app.view);
     this.app.stage.addChild(this.viewport);
     this.viewport.clampZoom({

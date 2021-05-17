@@ -54,12 +54,16 @@ h1.select-map {
   color: white;
 }
 
+.map-selector button {
+  height: 4rem;
+  width: 4rem;
+  background: gray;
+}
+
 div.map-selector {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
   gap: 1rem;
-  height: 13rem;
   width: 13rem;
 }
 

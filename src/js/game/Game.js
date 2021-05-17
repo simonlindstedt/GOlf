@@ -51,7 +51,7 @@ export default class Game {
   addBodies() {
     // Walls / Bounds
     this.map.coords.walls.forEach((w) => {
-      const wall = new Wall(w.x, w.y, w.w, w.h, w.a | 0);
+      const wall = new Wall(w.x, w.y, w.w, w.h, w.a ?? 0, w.r ?? 0.5, w.s ?? 1);
       console.log(wall);
       this.viewport.addChild(wall.sprite);
       Matter.Composite.add(this.engine.world, [wall.body]);

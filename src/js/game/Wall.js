@@ -9,8 +9,8 @@ export default class Wall {
     width,
     height,
     angle,
-    restitution = 0.5,
-    isStatic = true,
+    restitution,
+    isStatic,
     image = wallPng
   ) {
     //Sprite
@@ -21,11 +21,12 @@ export default class Wall {
     this.x = x;
     this.y = y;
     this.restitution = restitution;
-    this.isStatic = isStatic;
+    this.isStatic = true;
 
     this.sprite.anchor.set(0.5);
     this.sprite.height = this.height;
     this.sprite.width = this.width;
+    this.sprite.angle = this.angle;
     this.sprite.position.x = this.x;
     this.sprite.position.y = this.y;
 
@@ -36,6 +37,7 @@ export default class Wall {
       this.width,
       this.height,
       {
+        angle: this.angle * (Math.PI / 180),
         restitution: this.restitution,
         isStatic: this.isStatic,
       }

@@ -90,6 +90,19 @@ export default class Ball {
     }
   }
 
+  isInSand(sand) {
+    if (
+      Math.abs(this.body.position.x - sand.sprite.position.x) <
+        sand.sprite.width / 2 &&
+      Math.abs(this.body.position.y - sand.sprite.position.y) <
+        sand.sprite.height / 2
+    ) {
+      this.body.frictionAir = 0.2;
+    } else {
+      this.body.frictionAir = 0.025;
+    }
+  }
+
   distanceFromMouse(mousePos) {
     this.distance.current = Math.sqrt(
       Math.pow(this.body.position.x - mousePos.x, 2) +

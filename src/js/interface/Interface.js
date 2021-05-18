@@ -27,7 +27,6 @@ export default class Interface {
           this.init();
         },
       ],
-      ['option3', () => console.log('option3')],
     ];
 
     this.components = {

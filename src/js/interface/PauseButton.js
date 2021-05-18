@@ -8,6 +8,7 @@ export default class pauseButton {
     this.active = true;
     this.pauseButton = document.createElement('button');
     this.pauseButton.classList.add('pause-button');
+    this.pauseButton.textContent = '⎜⎜';
     // document.body.appendChild(this.pauseButton);
     this.parent.appendChild(this.pauseButton);
 

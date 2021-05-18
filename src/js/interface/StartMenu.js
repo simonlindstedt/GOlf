@@ -12,7 +12,7 @@ export default class StartMenu {
     this.startButton.classList.add('ball');
 
     this.text = document.createElement('p');
-    this.text.textContent = 'tap to start';
+    this.text.textContent = 'tap ball to start';
 
     this.section.appendChild(this.startButton);
     this.section.appendChild(this.text);

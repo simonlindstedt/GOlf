@@ -5,20 +5,22 @@ import Ball from './Ball';
 import Hole from './Hole.js';
 import Map from './Map';
 import Wall from './Wall';
+import WinScreen from '../interface/WinScreen';
 
 export default class Game {
   constructor(parentElement, level) {
     this.parentElement = parentElement;
     this.width = this.parentElement.clientWidth;
     this.height = this.parentElement.clientHeight;
-    this.level = level;
+    this.walls = [];
+    this.level = parseInt(level);
     this.app = new PIXI.Application({
       width: this.width,
       height: this.height,
       antialias: true,
       autoDensity: true,
       resolution: window.devicePixelRatio,
-      backgroundColor: 0x00ff00,
+      backgroundAlpha: 0,
     });
     this.viewport = new Viewport({
       interaction: this.app.renderer.plugins.interaction,
@@ -28,6 +30,9 @@ export default class Game {
       x: 0,
       y: 0,
     };
+    this.paused = false;
+    this.winScreen = new WinScreen();
+    this.strikes = 0;
     this.load();
   }
 
@@ -37,6 +42,9 @@ export default class Game {
     Matter.Composite.clear(this.engine.world);
 
     // Load graphics, bodies and setup events
+    if (this.paused) {
+      this.paused = false;
+    }
     this.map = new Map(this.level);
     this.addBodies();
     this.setupGameEvents();
@@ -45,7 +53,8 @@ export default class Game {
   addBodies() {
     // Walls / Bounds
     this.map.coords.walls.forEach((w) => {
-      const wall = new Wall(w.x, w.y, w.w, w.h);
+      const wall = new Wall(w.x, w.y, w.w, w.h, w.a ?? 0, w.r ?? 0.5, w.s ?? 1);
+      this.walls.push(wall);
       this.viewport.addChild(wall.sprite);
       Matter.Composite.add(this.engine.world, [wall.body]);
     });
@@ -89,13 +98,24 @@ export default class Game {
       if (this.ballDown) {
         this.ballDown = false;
         this.ball.shoot(this.mousePos);
+        this.strikes++;
         this.viewport.plugins.resume('drag');
       }
     });
   }
 
+  showWinScreen() {
+    this.paused = true;
+    this.winScreen.render(this.strikes);
+  }
+
   start(debug, stats) {
-    const renderWrapper = document.querySelector('div#render-wrapper');
+    const renderWrapper = document.createElement('div');
+    const appContainer = document.querySelector('main#app-container');
+    renderWrapper.style.position = 'absolute';
+    renderWrapper.style.top = '0';
+    renderWrapper.style.pointerEvents = 'none';
+    appContainer.insertAdjacentElement('afterend', renderWrapper);
     this.parentElement.appendChild(this.app.view);
     this.app.stage.addChild(this.viewport);
     this.viewport.clampZoom({
@@ -105,12 +125,14 @@ export default class Game {
 
     this.viewport.drag().pinch().wheel().decelerate();
 
-    window.addEventListener('resize', () => {
+    this.handleResize = () => {
       this.app.renderer.resize(
         this.parentElement.clientWidth,
         this.parentElement.clientHeight
       );
-    });
+    };
+
+    window.addEventListener('resize', this.handleResize);
 
     if (debug) {
       const debugRenderer = Matter.Render.create({
@@ -131,17 +153,31 @@ export default class Game {
   }
 
   update() {
-    Matter.Engine.update(this.engine);
-    this.ball.moveBall();
-    this.ball.drawAimDisplay(this.mousePos, this.ballDown);
-    this.ball.isInHole(this.hole, this.engine);
-    if (this.ball.inHole) {
-      this.level += 1;
-      if (this.level > 2) {
-        this.level = 1;
+    if (!this.paused) {
+      Matter.Engine.update(this.engine);
+      this.ball.moveBall();
+      this.walls.forEach((wall) => wall.moveWall());
+      this.ball.drawAimDisplay(this.mousePos, this.ballDown);
+      this.ball.isInHole(this.hole, this.engine);
+      if (this.ball.inHole) {
+        this.showWinScreen();
       }
-      // window.localStorage.level = this.level;
-      this.load(this.level);
     }
+    if (this.winScreen.continue) {
+      this.paused = false;
+      this.strikes = 0;
+      this.level++;
+      // window.localStorage.level = this.level
+      this.load(this.level);
+      this.winScreen.remove();
+    }
+  }
+
+  clear() {
+    this.viewport.removeChildren();
+    Matter.Composite.clear(this.engine.world);
+    this.app.destroy();
+    document.querySelector('#game-wrapper').remove();
+    window.removeEventListener('resize', this.handleResize);
   }
 }

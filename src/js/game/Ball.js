@@ -4,6 +4,7 @@ import { DropShadowFilter } from 'pixi-filters';
 
 export default class Ball {
   constructor(x, y, r, options) {
+    this.originalPosition = { x: x, y: y };
     this.graphic = new Graphics();
     this.shadow = new DropShadowFilter({
       alpha: 0.4,
@@ -100,6 +101,24 @@ export default class Ball {
       this.body.frictionAir = 0.2;
     } else {
       this.body.frictionAir = 0.025;
+    }
+  }
+
+  isInWater(water) {
+    if (
+      Math.abs(this.body.position.x - water.sprite.position.x) <
+        water.sprite.width / 2 &&
+      Math.abs(this.body.position.y - water.sprite.position.y) <
+        water.sprite.height / 2
+    ) {
+      Body.setVelocity(this.body, { x: 0, y: 0 });
+      Body.setPosition(this.body, {
+        x: this.originalPosition.x,
+        y: this.originalPosition.y,
+      });
+      return true;
+    } else {
+      return false;
     }
   }
 

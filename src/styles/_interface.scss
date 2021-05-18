@@ -7,8 +7,6 @@ button.ball {
   border: none;
   cursor: pointer;
   border-radius: 50%;
-  width: 128px;
-  height: 128px;
 }
 
 main#app-container {
@@ -19,13 +17,11 @@ main#app-container {
   width: 100%;
   height: 100%;
   background: linear-gradient(180deg, #e8ffe2 0%, #c2ffb2 100%);
+
   #intro-screen {
-    h1 {
-      font-size: 4em;
-      color: white;
-    }
+    animation: 2s ease-out 0s 1 backwards running fade-in;
     height: calc(100% - 48px);
-    min-width: 400px;
+    width: calc(100% - 48px);
     padding: 24px;
     display: flex;
     flex-direction: column;
@@ -33,6 +29,17 @@ main#app-container {
     align-items: center;
     background-color: grey;
     border-radius: 8px;
+
+    button.ball {
+      width: 256px;
+      height: 256px;
+      font-size: 4em;
+      animation: 60s linear 0s infinite both running rotate;
+      transition: transform 0.2s ease-in-out;
+      &:hover {
+        animation-play-state: paused;
+      }
+    }
   }
   #win-screen {
     position: absolute;

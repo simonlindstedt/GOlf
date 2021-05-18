@@ -7,15 +7,15 @@ export default class StartMenu {
     this.section = document.createElement('section');
     this.section.id = 'intro-screen';
 
-    // this.heading = document.createElement('h1');
-    // this.heading.textContent = 'GOlf';
-
     this.startButton = document.createElement('button');
     this.startButton.textContent = 'GOlf';
     this.startButton.classList.add('ball');
 
-    // this.section.appendChild(this.heading);
+    this.text = document.createElement('p');
+    this.text.textContent = 'tap to start';
+
     this.section.appendChild(this.startButton);
+    this.section.appendChild(this.text);
     this.parent.appendChild(this.section);
     this.active = true;
   }

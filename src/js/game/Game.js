@@ -164,6 +164,11 @@ export default class Game {
       }
     }
     if (this.winScreen.continue) {
+      this.viewport.scaled = 1;
+      this.viewport.corner = {
+        x: 0,
+        y: 0,
+      };
       this.paused = false;
       this.strikes = 0;
       this.level++;

@@ -1,7 +1,7 @@
 import { Sprite, Texture } from 'pixi.js';
 import sand from 'url:~src/js/game/assets/textures/sand.png';
 
-export default class Wall {
+export default class Sand {
   constructor(x, y, width, height) {
     //Sprite
     this.sprite = Sprite.from(Texture.from(sand));

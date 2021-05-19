@@ -143,12 +143,12 @@ export default class Game {
   }
 
   start(debug, stats) {
-    const renderWrapper = document.createElement('div');
-    const appContainer = document.querySelector('main#app-container');
-    renderWrapper.style.position = 'absolute';
-    renderWrapper.style.top = '0';
-    renderWrapper.style.pointerEvents = 'none';
-    appContainer.insertAdjacentElement('afterend', renderWrapper);
+    // const renderWrapper = document.createElement('div');
+    // const appContainer = document.querySelector('main#app-container');
+    // renderWrapper.style.position = 'absolute';
+    // renderWrapper.style.top = '0';
+    // renderWrapper.style.pointerEvents = 'none';
+    // appContainer.insertAdjacentElement('afterend', renderWrapper);
     this.parentElement.appendChild(this.app.view);
     this.app.stage.addChild(this.viewport);
     this.viewport.clampZoom({

@@ -74,7 +74,7 @@ export default class Interface {
     };
 
     this.components.startMenu.render();
-    this.components.startMenu.startButton.addEventListener(
+    this.components.startMenu.section.addEventListener(
       'click',
       selectMapScreen
     );

@@ -10,15 +10,11 @@ export default class pauseMenu {
     this.active = true;
     this.section = document.createElement('section');
     this.section.classList.add('pause-container');
+    const menu = document.createElement('h1');
+    menu.textContent = 'Menu';
+    this.section.appendChild(menu);
     if (this.paused) {
-      // this.menuContainer = document.createElement('div');
-      // this.menuContainer.classList.add('menu-container');
       this.options.forEach((option) => {
-        // this.option = document.createElement('div');
-        // this.option.classList.add('pause-option');
-        // this.option.textContent = option[0];
-        // this.menuContainer.appendChild(this.option);
-        // this.option.addEventListener('click', option[1]);
         const button = document.createElement('button');
         button.classList.add('ball');
         button.textContent = option[0];

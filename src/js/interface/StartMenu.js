@@ -8,11 +8,13 @@ export default class StartMenu {
     this.section.id = 'intro-screen';
 
     this.startButton = document.createElement('button');
-    this.startButton.textContent = 'GOlf';
+    this.h1 = document.createElement('h1');
+    this.h1.textContent = 'GOlf';
+    this.startButton.appendChild(this.h1);
     this.startButton.classList.add('ball');
 
     this.text = document.createElement('p');
-    this.text.textContent = 'tap ball to start';
+    this.text.textContent = 'Press anywhere to start';
 
     this.section.appendChild(this.startButton);
     this.section.appendChild(this.text);

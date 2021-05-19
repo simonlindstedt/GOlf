@@ -52,6 +52,18 @@ export default class Game {
     this.map = new Map(this.level);
     this.addBodies();
     this.setupGameEvents();
+    this.viewport.scaled = 1;
+    if (this.map.coords.camera) {
+      this.viewport.corner = {
+        x: this.map.coords.camera.x,
+        y: this.map.coords.camera.y,
+      };
+    } else {
+      this.viewport.corner = {
+        x: 0,
+        y: 0,
+      };
+    }
   }
 
   addBodies() {

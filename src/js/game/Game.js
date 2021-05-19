@@ -5,7 +5,9 @@ import Ball from './Ball';
 import Hole from './Hole.js';
 import Map from './Map';
 import Wall from './Wall';
+import Sand from './Sand';
 import WinScreen from '../interface/WinScreen';
+import Water from './Water';
 
 export default class Game {
   constructor(parentElement, level) {
@@ -13,6 +15,8 @@ export default class Game {
     this.width = this.parentElement.clientWidth;
     this.height = this.parentElement.clientHeight;
     this.walls = [];
+    this.sands = [];
+    this.waters = [];
     this.level = parseInt(level);
     this.app = new PIXI.Application({
       width: this.width,
@@ -58,6 +62,19 @@ export default class Game {
       this.viewport.addChild(wall.sprite);
       Matter.Composite.add(this.engine.world, [wall.body]);
     });
+    // Sand
+    this.map.coords.sands.forEach((s) => {
+      const sand = new Sand(s.x, s.y, s.w, s.h);
+      this.sands.push(sand);
+      this.viewport.addChild(sand.sprite);
+    });
+    // Water
+    this.map.coords.waters.forEach((w) => {
+      const water = new Water(w.x, w.y, w.w, w.h);
+      this.waters.push(water);
+      this.viewport.addChild(water.sprite);
+    });
+
     // Hole
     this.hole = new Hole(
       this.map.coords.hole.x,
@@ -158,6 +175,12 @@ export default class Game {
       this.ball.moveBall();
       this.walls.forEach((wall) => wall.moveWall());
       this.ball.drawAimDisplay(this.mousePos, this.ballDown);
+      this.sands.forEach((sand) => this.ball.isInSand(sand));
+      this.waters.forEach((water) => {
+        if (this.ball.isInWater(water, this)) {
+          this.strikes += 1;
+        }
+      });
       this.ball.isInHole(this.hole, this.engine);
       if (this.ball.inHole) {
         this.showWinScreen();

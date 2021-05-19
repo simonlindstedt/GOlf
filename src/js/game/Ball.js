@@ -17,7 +17,6 @@ export default class Ball {
     this.aimLine = new Graphics();
     this.graphic.interactive = true;
     this.graphic.cursor = 'pointer';
-    this.mouseDown = false;
     this.body = Bodies.circle(x, y, r, options);
     this.holeConstraint = undefined;
     this.inHole = false;
@@ -73,7 +72,6 @@ export default class Ball {
         });
 
         Composite.add(engine.world, this.holeConstraint);
-        // this.inHole = true;
       }
     } else {
       if (this.holeConstraint) {

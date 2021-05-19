@@ -114,8 +114,10 @@ export default class Game {
     this.mousePos = { x: 0, y: 0 };
 
     this.ball.graphic.on('pointerdown', () => {
-      this.ballDown = true;
-      this.viewport.plugins.pause('drag');
+      if (this.ball.body.speed < 0.1) {
+        this.ballDown = true;
+        this.viewport.plugins.pause('drag');
+      }
     });
 
     this.viewport.on('pointermove', (e) => {

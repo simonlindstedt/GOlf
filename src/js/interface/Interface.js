@@ -27,7 +27,6 @@ export default class Interface {
           this.init();
         },
       ],
-      ['option3', () => console.log('option3')],
     ];
 
     this.components = {
@@ -75,7 +74,7 @@ export default class Interface {
     };
 
     this.components.startMenu.render();
-    this.components.startMenu.startButton.addEventListener(
+    this.components.startMenu.section.addEventListener(
       'click',
       selectMapScreen
     );

@@ -1,3 +1,14 @@
+button.ball {
+  position: relative;
+  background-image: url('./assets/ball.png');
+  background-position: center;
+  background-size: contain;
+  color: #4e5749;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
 main#app-container {
   position: relative;
   display: flex;
@@ -5,7 +16,8 @@ main#app-container {
   align-items: center;
   width: 100%;
   height: 100%;
-  background: rgb(125, 207, 110);
+  background: linear-gradient(180deg, #e8ffe2 0%, #c2ffb2 100%);
+
   #menu {
     h1 {
       font-size: 4em;
@@ -22,6 +34,7 @@ main#app-container {
     border-radius: 8px;
     background: linear-gradient(180deg, #e6ffe0 0%, #c2ffb2 100%);
   }
+
   #win-screen {
     position: absolute;
     display: flex;
@@ -40,6 +53,7 @@ main#app-container {
   width: 100%;
   height: 100%;
 }
+
 //Select Map
 .select-map-container {
   font-family: 'Courier New', Courier, monospace;
@@ -91,37 +105,38 @@ button.start-button {
   color: black;
 }
 
+
 //Pause menu
-.pause-container {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Courier New', Courier, monospace;
-}
+// .pause-container {
+//   position: absolute;
+//   width: 100%;
+//   height: 100%;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   font-family: 'Courier New', Courier, monospace;
+// }
 
-.menu-container {
-  height: inherit;
-  width: inherit;
-  // max-width: 20rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1rem;
-  align-items: center;
-  padding: 2rem;
-  border-radius: 20px;
-  background: rgba(211, 211, 211, 0.629);
-  backdrop-filter: blur(10px);
-}
+// .menu-container {
+//   height: inherit;
+//   width: inherit;
+//   // max-width: 20rem;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   gap: 1rem;
+//   align-items: center;
+//   padding: 2rem;
+//   border-radius: 20px;
+//   background: rgba(211, 211, 211, 0.629);
+//   backdrop-filter: blur(10px);
+// }
 
-.pause-option {
-  color: black;
-  font-size: large;
-  cursor: pointer;
-}
+// .pause-option {
+//   color: black;
+//   font-size: large;
+//   cursor: pointer;
+// }
 
 button.pause-button {
   cursor: pointer;

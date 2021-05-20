@@ -18,6 +18,7 @@ export default class Ball {
     this.graphic.interactive = true;
     this.graphic.cursor = 'pointer';
     this.body = Bodies.circle(x, y, r, options);
+    this.body.frictionAir = 0.02;
     this.holeConstraint = undefined;
     this.inHole = false;
     this.distance = {
@@ -98,7 +99,7 @@ export default class Ball {
     ) {
       this.body.frictionAir = 0.2;
     } else {
-      this.body.frictionAir = 0.025;
+      this.body.frictionAir = 0.02;
     }
   }
 

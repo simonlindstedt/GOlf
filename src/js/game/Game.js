@@ -53,17 +53,10 @@ export default class Game {
     this.addBodies();
     this.setupGameEvents();
     this.viewport.scaled = 1;
-    if (this.map.coords.camera) {
-      this.viewport.corner = {
-        x: this.map.coords.camera.x,
-        y: this.map.coords.camera.y,
-      };
-    } else {
-      this.viewport.corner = {
-        x: 0,
-        y: 0,
-      };
-    }
+    this.viewport.corner = {
+      x: this.ball.body.position.x - this.width / 2,
+      y: this.ball.body.position.y - this.height / 2,
+    };
   }
 
   addBodies() {
@@ -163,6 +156,8 @@ export default class Game {
         this.parentElement.clientWidth,
         this.parentElement.clientHeight
       );
+      this.viewport.screenWidth = this.parentElement.clientWidth;
+      this.viewport.screenHeight = this.parentElement.clientHeight;
     };
 
     window.addEventListener('resize', this.handleResize);
@@ -185,8 +180,24 @@ export default class Game {
     });
   }
 
+  cameraOutOfBounds(maxDistance) {
+    const distance = Math.sqrt(
+      Math.pow(this.viewport.center.x - this.ball.body.position.x, 2) +
+        Math.pow(this.viewport.center.y - this.ball.body.position.y, 2)
+    );
+    return distance > maxDistance;
+  }
+
   update() {
     if (!this.paused) {
+      if (this.cameraOutOfBounds(2000)) {
+        this.viewport.animate({
+          position: this.ball.body.position,
+          time: 1500,
+          ease: 'easeOutQuint',
+        });
+      }
+
       Matter.Engine.update(this.engine);
       this.ball.moveBall();
       this.walls.forEach((wall) => wall.moveWall());

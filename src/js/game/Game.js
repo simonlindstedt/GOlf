@@ -81,10 +81,7 @@ export default class Game {
       this.sands.push(sand);
       this.viewport.addChild(sand.sprite);
     });
-<<<<<<< HEAD
-=======
 
->>>>>>> 966d87f03825a9a338561e9333823d127b20cf37
     // Water
     this.map.coords.waters?.forEach((w) => {
       const water = new Water(w.x, w.y, w.w, w.h);

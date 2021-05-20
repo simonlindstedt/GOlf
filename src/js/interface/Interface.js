@@ -5,6 +5,7 @@ import PauseMenu from './PauseMenu';
 import PauseButton from './PauseButton';
 import GameWrapper from './GameWrapper';
 import Map from '../game/Map';
+import { Body } from 'matter-js';
 
 export default class Interface {
   constructor() {
@@ -16,6 +17,23 @@ export default class Interface {
         () => {
           this.components.pauseMenu.paused = false;
           this.game.paused = false;
+          this.components.pauseMenu.remove();
+        },
+      ],
+      [
+        'Restart',
+        () => {
+          this.components.pauseMenu.paused = false;
+          this.game.paused = false;
+          Body.setPosition(this.game.ball.body, {
+            x: this.game.ball.originalPosition.x,
+            y: this.game.ball.originalPosition.y,
+          });
+          Body.setVelocity(this.game.ball.body, {
+            x: 0,
+            y: 0,
+          });
+          this.game.strikes = 0;
           this.components.pauseMenu.remove();
         },
       ],

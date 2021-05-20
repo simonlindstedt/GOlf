@@ -60,14 +60,6 @@ export default class Game {
   }
 
   addBodies() {
-    // Walls / Bounds
-    this.map.coords.walls.forEach((w) => {
-      const wall = new Wall(w.x, w.y, w.w, w.h, w.a ?? 0, w.r ?? 0.5, w.s ?? 1);
-      this.walls.push(wall);
-      this.viewport.addChild(wall.sprite);
-      Matter.Composite.add(this.engine.world, [wall.body]);
-    });
-
     // Sand
     this.map.coords.sands?.forEach((s) => {
       const sand = new Sand(s.x, s.y, s.w, s.h);
@@ -80,6 +72,14 @@ export default class Game {
       const water = new Water(w.x, w.y, w.w, w.h);
       this.waters.push(water);
       this.viewport.addChild(water.sprite);
+    });
+
+    // Walls / Bounds
+    this.map.coords.walls.forEach((w) => {
+      const wall = new Wall(w.x, w.y, w.w, w.h, w.a ?? 0, w.r ?? 0.5, w.s ?? 1);
+      this.walls.push(wall);
+      this.viewport.addChild(wall.sprite);
+      Matter.Composite.add(this.engine.world, [wall.body]);
     });
 
     // Hole

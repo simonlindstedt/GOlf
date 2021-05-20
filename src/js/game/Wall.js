@@ -36,6 +36,7 @@ export default class Wall {
         angle: this.angle * (Math.PI / 180),
         restitution: this.restitution,
         isStatic: this.isStatic,
+        frictionAir: 0.04,
       }
     );
   }

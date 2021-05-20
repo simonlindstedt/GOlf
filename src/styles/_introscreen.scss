@@ -3,12 +3,12 @@
   animation: fade-in 2s ease-out 0.5s 1 backwards running;
   height: inherit;
   width: inherit;
-  padding: 24px;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  border-radius: 8px;
+  border-radius: 0.5rem;
 
   button.ball {
     margin-top: 3rem;
@@ -19,13 +19,13 @@
     // &:hover {
     //   animation-play-state: paused;
     // }
-    filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.43));
+    filter: drop-shadow(0px 0px 1.6rem rgba(0, 0, 0, 0.43));
     transform: rotate(-0.09deg);
     color: #4e5749;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.33);
+    text-shadow: 0px 0px 0.25rem rgba(0, 0, 0, 0.33);
     h1 {
       position: relative;
-      font-size: 6em;
+      font-size: 6rem;
       top: 0.4rem;
       right: 0.1rem;
       margin: 0;

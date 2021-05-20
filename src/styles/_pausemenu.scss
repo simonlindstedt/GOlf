@@ -16,13 +16,13 @@
   justify-content: space-evenly;
 
   button.ball {
-    width: 10rem;
-    height: 10rem;
-    font-size: 1.5em;
+    width: 8rem;
+    height: 8rem;
+    font-size: 1.3rem;
     transition: transform 0.2s ease-in-out;
-    filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.43));
+    filter: drop-shadow(0px 0px 1.6rem rgba(0, 0, 0, 0.43));
     transform: rotate(-0.09deg);
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.33);
+    text-shadow: 0px 0px 0.25rem rgba(0, 0, 0, 0.33);
     &:hover {
       transform: scale(1.05);
     }
@@ -37,7 +37,7 @@ button.pause-button {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  border-radius: 18px;
+  border-radius: 1.125rem;
   background: rgba(211, 211, 211, 0.629);
   backdrop-filter: blur(10px);
   height: 4rem;

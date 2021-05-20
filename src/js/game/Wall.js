@@ -14,7 +14,7 @@ export default class Wall {
     image = wallPng
   ) {
     //Sprite
-    this.sprite = Sprite.from(Texture.from(image));
+    this.sprite = Sprite.from(Texture.WHITE);
     this.height = height;
     this.width = width;
     this.angle = angle;

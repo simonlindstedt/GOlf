@@ -52,6 +52,18 @@ export default class Game {
     this.map = new Map(this.level);
     this.addBodies();
     this.setupGameEvents();
+    this.viewport.scaled = 1;
+    if (this.map.coords.camera) {
+      this.viewport.corner = {
+        x: this.map.coords.camera.x,
+        y: this.map.coords.camera.y,
+      };
+    } else {
+      this.viewport.corner = {
+        x: 0,
+        y: 0,
+      };
+    }
   }
 
   addBodies() {
@@ -63,17 +75,21 @@ export default class Game {
       Matter.Composite.add(this.engine.world, [wall.body]);
     });
     // Sand
-    this.map.coords.sands.forEach((s) => {
-      const sand = new Sand(s.x, s.y, s.w, s.h);
-      this.sands.push(sand);
-      this.viewport.addChild(sand.sprite);
-    });
+    if (this.map.coords.sands) {
+      this.map.coords.sands.forEach((s) => {
+        const sand = new Sand(s.x, s.y, s.w, s.h);
+        this.sands.push(sand);
+        this.viewport.addChild(sand.sprite);
+      });
+    }
     // Water
-    this.map.coords.waters.forEach((w) => {
-      const water = new Water(w.x, w.y, w.w, w.h);
-      this.waters.push(water);
-      this.viewport.addChild(water.sprite);
-    });
+    if (this.map.coords.waters) {
+      this.map.coords.waters.forEach((w) => {
+        const water = new Water(w.x, w.y, w.w, w.h);
+        this.waters.push(water);
+        this.viewport.addChild(water.sprite);
+      });
+    }
 
     // Hole
     this.hole = new Hole(

@@ -1,6 +1,5 @@
 import Matter from 'matter-js';
-import { filters, Sprite, Texture } from 'pixi.js';
-import gray from 'url:~src/js/game/assets/textures/gray.jpeg';
+import { Sprite, Texture } from 'pixi.js';
 import wood from 'url:~src/js/game/assets/textures/wood.jpg';
 
 export default class Wall {

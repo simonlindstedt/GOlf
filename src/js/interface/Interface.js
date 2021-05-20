@@ -38,11 +38,11 @@ export default class Interface {
         },
       ],
       [
-        'To start',
+        'Exit map',
         () => {
           this.clear();
           this.game.clear();
-          this.init();
+          this.components.selectMap.render(this.loadMap, new Map(1).mapCount);
         },
       ],
     ];
@@ -58,7 +58,7 @@ export default class Interface {
   init() {
     this.clear();
 
-    const loadMap = (e) => {
+    this.loadMap = (e) => {
       this.components.selectMap.remove();
       this.components.gameWrapper.render();
       this.game = new Game(
@@ -88,7 +88,7 @@ export default class Interface {
         selectMapScreen
       );
       //Room for optimizations due to duplicate maps.json import
-      this.components.selectMap.render(loadMap, new Map(1).mapCount);
+      this.components.selectMap.render(this.loadMap, new Map(1).mapCount);
     };
 
     this.components.startMenu.render();

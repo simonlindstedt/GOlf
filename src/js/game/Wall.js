@@ -1,20 +1,16 @@
 import Matter from 'matter-js';
-import { Sprite, Texture } from 'pixi.js';
-import wallPng from 'url:~src/js/game/assets/textures/white.png';
+import { filters, Sprite, Texture } from 'pixi.js';
+import gray from 'url:~src/js/game/assets/textures/gray.jpeg';
+import wood from 'url:~src/js/game/assets/textures/wood.jpg';
 
 export default class Wall {
-  constructor(
-    x,
-    y,
-    width,
-    height,
-    angle,
-    restitution,
-    isStatic,
-    image = wallPng
-  ) {
+  constructor(x, y, width, height, angle, restitution, isStatic) {
     //Sprite
-    this.sprite = Sprite.from(Texture.WHITE);
+    if (isStatic) {
+      this.sprite = Sprite.from(Texture.WHITE);
+    } else {
+      this.sprite = Sprite.from(Texture.from(wood));
+    }
     this.height = height;
     this.width = width;
     this.angle = angle;

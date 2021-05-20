@@ -75,21 +75,17 @@ export default class Game {
       Matter.Composite.add(this.engine.world, [wall.body]);
     });
     // Sand
-    if (this.map.coords.sands) {
-      this.map.coords.sands.forEach((s) => {
-        const sand = new Sand(s.x, s.y, s.w, s.h);
-        this.sands.push(sand);
-        this.viewport.addChild(sand.sprite);
-      });
-    }
+    this.map.coords.sands?.forEach((s) => {
+      const sand = new Sand(s.x, s.y, s.w, s.h);
+      this.sands.push(sand);
+      this.viewport.addChild(sand.sprite);
+    });
     // Water
-    if (this.map.coords.waters) {
-      this.map.coords.waters.forEach((w) => {
-        const water = new Water(w.x, w.y, w.w, w.h);
-        this.waters.push(water);
-        this.viewport.addChild(water.sprite);
-      });
-    }
+    this.map.coords.waters?.forEach((w) => {
+      const water = new Water(w.x, w.y, w.w, w.h);
+      this.waters.push(water);
+      this.viewport.addChild(water.sprite);
+    });
 
     // Hole
     this.hole = new Hole(

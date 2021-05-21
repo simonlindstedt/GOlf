@@ -105,9 +105,9 @@ export default class Game {
     this.mousePos = { x: 0, y: 0 };
 
     this.ball.graphic.on('pointerdown', () => {
-      if (this.ball.body.speed < 0.1) {
+      this.viewport.plugins.pause('drag');
+      if (this.ball.body.speed < 0.2) {
         this.ballDown = true;
-        this.viewport.plugins.pause('drag');
       }
     });
 
@@ -121,11 +121,11 @@ export default class Game {
     });
 
     this.viewport.on('pointerup', () => {
+      this.viewport.plugins.resume('drag');
       if (this.ballDown) {
         this.ballDown = false;
         this.ball.shoot(this.mousePos);
         this.strikes++;
-        this.viewport.plugins.resume('drag');
       }
     });
   }

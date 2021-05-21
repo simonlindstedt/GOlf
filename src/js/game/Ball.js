@@ -133,6 +133,11 @@ export default class Ball {
   }
 
   moveBall() {
+    if (this.body.speed < 0.2) {
+      this.body.frictionAir = 0.2;
+    } else {
+      this.body.frictionAir = 0.02;
+    }
     this.graphic.clear();
     this.graphic.beginFill(0xffffff);
     this.graphic.drawCircle(

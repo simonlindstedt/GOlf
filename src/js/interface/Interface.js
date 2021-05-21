@@ -8,6 +8,7 @@ import Map from '../game/Map';
 
 export default class Interface {
   constructor() {
+    this.mapCount = new Map(1).mapCount;
     this.parent = document.querySelector('main#app-container');
     this.pauseMenuClickHandler = () => {
       if (this.components.pauseMenu.paused) {
@@ -54,7 +55,7 @@ export default class Interface {
         () => {
           this.clear();
           this.game.clear();
-          this.components.selectMap.render(this.loadMap, new Map(1).mapCount);
+          this.components.selectMap.render(this.loadMap, this.mapCount);
         },
       ],
     ];
@@ -90,7 +91,7 @@ export default class Interface {
         selectMapScreen
       );
       //Room for optimizations due to duplicate maps.json import
-      this.components.selectMap.render(this.loadMap, new Map(1).mapCount);
+      this.components.selectMap.render(this.loadMap, this.mapCount);
     };
 
     this.components.startMenu.render();

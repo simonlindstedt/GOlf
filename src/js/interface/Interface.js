@@ -10,6 +10,17 @@ import { Body } from 'matter-js';
 export default class Interface {
   constructor() {
     this.parent = document.querySelector('main#app-container');
+    this.pauseMenuClickHandler = () => {
+      if (this.components.pauseMenu.paused) {
+        this.components.pauseMenu.paused = false;
+        this.game.paused = false;
+        this.components.pauseMenu.remove();
+      } else {
+        this.components.pauseMenu.paused = true;
+        this.game.paused = true;
+        this.components.pauseMenu.render();
+      }
+    };
 
     this.menuOptions = [
       [
@@ -25,16 +36,16 @@ export default class Interface {
         () => {
           this.components.pauseMenu.paused = false;
           this.game.paused = false;
-          Body.setPosition(this.game.ball.body, {
-            x: this.game.ball.originalPosition.x,
-            y: this.game.ball.originalPosition.y,
-          });
-          Body.setVelocity(this.game.ball.body, {
-            x: 0,
-            y: 0,
-          });
-          this.game.strikes = 0;
-          this.components.pauseMenu.remove();
+          this.game.clear();
+          this.clear();
+          this.components.gameWrapper.render();
+          this.game = new Game(
+            this.components.gameWrapper.div,
+            window.sessionStorage.currentMap
+          );
+          this.game.start(false, false);
+          this.components.pauseMenu.options = this.menuOptions;
+          this.components.pauseButton.render(this.pauseMenuClickHandler);
         },
       ],
       [
@@ -65,20 +76,10 @@ export default class Interface {
         this.components.gameWrapper.div,
         e.target.dataset.map
       );
+      window.sessionStorage.currentMap = e.target.dataset.map;
       this.game.start(false, false);
-      const clickHandler = () => {
-        if (this.components.pauseMenu.paused) {
-          this.components.pauseMenu.paused = false;
-          this.game.paused = false;
-          this.components.pauseMenu.remove();
-        } else {
-          this.components.pauseMenu.paused = true;
-          this.game.paused = true;
-          this.components.pauseMenu.render();
-        }
-      };
       this.components.pauseMenu.options = this.menuOptions;
-      this.components.pauseButton.render(clickHandler);
+      this.components.pauseButton.render(this.pauseMenuClickHandler);
     };
 
     const selectMapScreen = () => {

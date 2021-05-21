@@ -224,6 +224,7 @@ export default class Game {
   }
 
   clear() {
+    this.strikes = 0;
     this.viewport.removeChildren();
     Matter.Composite.clear(this.engine.world);
     this.app.destroy();

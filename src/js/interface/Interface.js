@@ -5,6 +5,7 @@ import PauseMenu from './PauseMenu';
 import PauseButton from './PauseButton';
 import GameWrapper from './GameWrapper';
 import Map from '../game/Map';
+import { fadeAway } from '../game/assets/Utility';
 
 export default class Interface {
   constructor() {
@@ -28,15 +29,16 @@ export default class Interface {
         () => {
           this.components.pauseMenu.paused = false;
           this.game.paused = false;
-          this.components.pauseMenu.remove();
+          fadeAway(this.components.pauseMenu.section);
         },
       ],
       [
         'Restart',
-        () => {
+        async () => {
           let currentLevel = this.game.level;
           this.components.pauseMenu.paused = false;
           this.game.paused = false;
+          await fadeAway(this.components.pauseMenu.section);
           this.game.clear();
           this.clear();
           this.components.gameWrapper.render();
@@ -52,7 +54,8 @@ export default class Interface {
       ],
       [
         'Exit map',
-        () => {
+        async () => {
+          await fadeAway(this.components.pauseMenu.section);
           this.clear();
           this.game.clear();
           this.components.selectMap.render(this.loadMap, this.mapCount);
@@ -71,8 +74,8 @@ export default class Interface {
   init() {
     this.clear();
 
-    this.loadMap = (e) => {
-      this.components.selectMap.remove();
+    this.loadMap = async (e) => {
+      await fadeAway(this.components.selectMap.section);
       this.components.gameWrapper.render();
       this.game = new Game(
         this.components.gameWrapper.div,
@@ -84,8 +87,8 @@ export default class Interface {
       this.components.pauseButton.render(this.pauseMenuClickHandler);
     };
 
-    const selectMapScreen = () => {
-      this.components.startMenu.remove();
+    const selectMapScreen = async () => {
+      await fadeAway(this.components.startMenu.section);
       this.components.startMenu.startButton.removeEventListener(
         'click',
         selectMapScreen

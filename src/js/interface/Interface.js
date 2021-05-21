@@ -34,6 +34,7 @@ export default class Interface {
       [
         'Restart',
         () => {
+          let currentLevel = this.game.level;
           this.components.pauseMenu.paused = false;
           this.game.paused = false;
           this.game.clear();
@@ -41,7 +42,8 @@ export default class Interface {
           this.components.gameWrapper.render();
           this.game = new Game(
             this.components.gameWrapper.div,
-            window.sessionStorage.currentMap
+            // window.sessionStorage.currentMap
+            currentLevel
           );
           this.game.start(false, false);
           this.components.pauseMenu.options = this.menuOptions;

@@ -82,9 +82,9 @@ export default class Ball {
       }
     }
     if (
-      Math.abs(this.body.position.x - hole.sprite.position.x) < 0.5 &&
-      Math.abs(this.body.position.y - hole.sprite.position.y) < 0.5 &&
-      this.body.speed < 0.4
+      Math.abs(this.body.position.x - hole.sprite.position.x) < 0.8 &&
+      Math.abs(this.body.position.y - hole.sprite.position.y) < 0.8 &&
+      this.body.speed < 2
     ) {
       this.inHole = true;
     }

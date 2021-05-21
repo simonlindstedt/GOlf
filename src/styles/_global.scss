@@ -27,6 +27,13 @@ html {
   margin: 0;
 }
 
+.fadeOut {
+  animation: fade-out 0.3s linear both !important;
+}
+.fadeIn {
+  animation: fade-in 0.3s linear both !important;
+}
+
 @media screen and (max-width: 600px), (max-height: 700px) {
   :root {
     font-size: 14px;

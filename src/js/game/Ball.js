@@ -60,15 +60,15 @@ export default class Ball {
   isInHole(hole, engine) {
     if (
       Math.abs(this.body.position.x - hole.sprite.position.x) <
-        hole.sprite.height &&
+        hole.sprite.height / 2 &&
       Math.abs(this.body.position.y - hole.sprite.position.y) <
-        hole.sprite.height
+        hole.sprite.height / 2
     ) {
       if (!this.holeConstraint) {
         this.holeConstraint = Constraint.create({
           bodyA: this.body,
           pointB: { x: hole.sprite.position.x, y: hole.sprite.position.y },
-          stiffness: 0.002,
+          stiffness: 0.004,
           length: 0,
         });
 

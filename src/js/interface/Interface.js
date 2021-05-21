@@ -5,7 +5,6 @@ import PauseMenu from './PauseMenu';
 import PauseButton from './PauseButton';
 import GameWrapper from './GameWrapper';
 import Map from '../game/Map';
-import { Body } from 'matter-js';
 
 export default class Interface {
   constructor() {

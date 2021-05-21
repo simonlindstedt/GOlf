@@ -106,7 +106,7 @@ export default class Game {
 
     this.ball.graphic.on('pointerdown', () => {
       this.viewport.plugins.pause('drag');
-      if (this.ball.body.speed < 0.1) {
+      if (this.ball.body.speed < 0.2) {
         this.ballDown = true;
       }
     });

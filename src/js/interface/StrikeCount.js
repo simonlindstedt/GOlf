@@ -32,7 +32,7 @@ export default class StartMenu {
   }
 
   updateCurrentStrikes(currentStrikes, mapNumber) {
-    this.prevRecord = this.scoreObject[`map${mapNumber}`];
+    this.prevRecord = this.scoreObject[`map${mapNumber}`] ?? 'Not set';
     this.prevRecEl.textContent = `Previous course record: ${this.prevRecord}`;
     this.strikeCount = currentStrikes;
     this.strikeCountEl.textContent = `Current strikes: ${this.strikeCount}`;

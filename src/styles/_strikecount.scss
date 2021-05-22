@@ -1,0 +1,18 @@
+.strike-count-flex-container {
+  display: flex;
+  font-size: 0.7rem;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  background: rgba(255, 255, 255, 0.629);
+  backdrop-filter: blur(3px);
+  border-radius: 1.125rem;
+  padding: 1rem;
+  color: #4e5749;
+
+  h1 {
+    margin: 0.5rem;
+  }
+}

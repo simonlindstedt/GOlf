@@ -39,6 +39,7 @@ export default class Game {
     this.winScreen = new WinScreen();
     this.strikes = 0;
     this.load();
+    this.strikeCount.updateCurrentStrikes(this.strikes, this.level);
   }
 
   load() {
@@ -127,7 +128,7 @@ export default class Game {
         this.ballDown = false;
         this.ball.shoot(this.mousePos);
         this.strikes++;
-        this.strikeCount.setStrikes(this.strikes);
+        this.strikeCount.updateCurrentStrikes(this.strikes, this.level);
       }
     });
   }
@@ -135,7 +136,7 @@ export default class Game {
   showWinScreen() {
     this.paused = true;
     this.winScreen.render(this.strikes);
-    this.strikeCount.updateTotalStrikes(this.strikes);
+    this.strikeCount.updateTotalStrikes(this.strikes, this.level);
   }
 
   start(debug, stats) {
@@ -222,6 +223,7 @@ export default class Game {
       this.level++;
       // window.localStorage.level = this.level
       this.load(this.level);
+      this.strikeCount.updateCurrentStrikes(this.strikes, this.level);
       this.winScreen.remove();
     }
   }

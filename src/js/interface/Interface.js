@@ -79,6 +79,7 @@ export default class Interface {
     this.loadMap = async (e) => {
       await fadeAway(this.components.selectMap.section);
       this.components.gameWrapper.render();
+      this.components.strikeCount.render();
       this.game = new Game(
         this.components.gameWrapper.div,
         e.target.dataset.map,
@@ -88,7 +89,6 @@ export default class Interface {
       this.game.start(false, false);
       this.components.pauseMenu.options = this.menuOptions;
       this.components.pauseButton.render(this.pauseMenuClickHandler);
-      this.components.strikeCount.render();
     };
 
     const selectMapScreen = async () => {

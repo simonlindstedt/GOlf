@@ -10,7 +10,8 @@ import WinScreen from '../interface/WinScreen';
 import Water from './Water';
 
 export default class Game {
-  constructor(parentElement, level) {
+  constructor(parentElement, level, strikeCount) {
+    this.strikeCount = strikeCount;
     this.parentElement = parentElement;
     this.width = this.parentElement.clientWidth;
     this.height = this.parentElement.clientHeight;
@@ -126,6 +127,7 @@ export default class Game {
         this.ballDown = false;
         this.ball.shoot(this.mousePos);
         this.strikes++;
+        this.strikeCount.setStrikes(this.strikes);
       }
     });
   }
@@ -133,6 +135,7 @@ export default class Game {
   showWinScreen() {
     this.paused = true;
     this.winScreen.render(this.strikes);
+    this.strikeCount.updateTotalStrikes(this.strikes);
   }
 
   start(debug, stats) {

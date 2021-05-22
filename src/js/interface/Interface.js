@@ -3,6 +3,7 @@ import StartMenu from './StartMenu';
 import SelectMap from './SelectMap';
 import PauseMenu from './PauseMenu';
 import PauseButton from './PauseButton';
+import StrikeCount from './StrikeCount';
 import GameWrapper from './GameWrapper';
 import Map from '../game/Map';
 import { fadeAway } from '../game/assets/Utility';
@@ -44,8 +45,8 @@ export default class Interface {
           this.components.gameWrapper.render();
           this.game = new Game(
             this.components.gameWrapper.div,
-            // window.sessionStorage.currentMap
-            currentLevel
+            currentLevel,
+            this.components.strikeCount
           );
           this.game.start(false, false);
           this.components.pauseMenu.options = this.menuOptions;
@@ -69,6 +70,7 @@ export default class Interface {
       pauseMenu: new PauseMenu(),
       pauseButton: new PauseButton(),
       gameWrapper: new GameWrapper(),
+      strikeCount: new StrikeCount(),
     };
   }
   init() {
@@ -79,12 +81,14 @@ export default class Interface {
       this.components.gameWrapper.render();
       this.game = new Game(
         this.components.gameWrapper.div,
-        e.target.dataset.map
+        e.target.dataset.map,
+        this.components.strikeCount
       );
       window.sessionStorage.currentMap = e.target.dataset.map;
       this.game.start(false, false);
       this.components.pauseMenu.options = this.menuOptions;
       this.components.pauseButton.render(this.pauseMenuClickHandler);
+      this.components.strikeCount.render();
     };
 
     const selectMapScreen = async () => {

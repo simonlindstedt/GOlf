@@ -63,6 +63,7 @@ export default class Game {
 
   addBodies() {
     // Sand
+    this.sands = [];
     this.map.coords.sands?.forEach((s) => {
       const sand = new Sand(s.x, s.y, s.w, s.h);
       this.sands.push(sand);
@@ -70,6 +71,7 @@ export default class Game {
     });
 
     // Water
+    this.waters = [];
     this.map.coords.waters?.forEach((w) => {
       const water = new Water(w.x, w.y, w.w, w.h);
       this.waters.push(water);
@@ -77,6 +79,7 @@ export default class Game {
     });
 
     // Walls / Bounds
+    this.walls = [];
     this.map.coords.walls.forEach((w) => {
       const wall = new Wall(w.x, w.y, w.w, w.h, w.a ?? 0, w.r ?? 0.5, w.s ?? 1);
       this.walls.push(wall);

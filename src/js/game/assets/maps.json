@@ -548,6 +548,14 @@
         "h": 20
       },
       {
+        "comment": "angle",
+        "a": -45,
+        "x": 170,
+        "y": 260,
+        "w": 90,
+        "h": 20
+      },
+      {
         "comment": "right tunnel wall",
         "x": 140,
         "y": 420,

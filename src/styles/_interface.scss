@@ -33,18 +33,6 @@ main#app-container {
     background-color: grey;
     border-radius: 0.5rempx;
   }
-
-  #win-screen {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background: rgba(211, 211, 211, 0.629);
-    backdrop-filter: blur(10px);
-  }
 }
 
 #game-wrapper {

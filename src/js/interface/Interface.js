@@ -51,6 +51,11 @@ export default class Interface {
           this.game.start(false, false);
           this.components.pauseMenu.options = this.menuOptions;
           this.components.pauseButton.render(this.pauseMenuClickHandler);
+          this.components.strikeCount.render();
+          this.components.strikeCount.updateCurrentStrikes(
+            this.game.strikes,
+            this.game.level
+          );
         },
       ],
       [

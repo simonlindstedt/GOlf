@@ -505,5 +505,97 @@
         "h": 180
       }
     ]
+  },
+  "map8": {
+    "start": {
+      "x": 200,
+      "y": 950
+    },
+    "hole": {
+      "x": 300,
+      "y": 280,
+      "r": 25
+    },
+    "walls": [
+      {
+        "comment": "left wall",
+        "x": 0,
+        "y": 800,
+        "w": 20,
+        "h": 400
+      },
+      {
+        "comment": "right wall",
+        "x": 400,
+        "y": 800,
+        "w": 20,
+        "h": 400
+      },
+      {
+        "comment": "bottom wall",
+        "x": 200,
+        "y": 990,
+        "w": 400,
+        "h": 20
+      },
+      {
+        "comment": "top right wall",
+        "x": 75,
+        "y": 610,
+        "w": 150,
+        "h": 20
+      },
+      {
+        "comment": "top left wall",
+        "x": 325,
+        "y": 610,
+        "w": 150,
+        "h": 20
+      },
+      {
+        "comment": "angle",
+        "a": -45,
+        "x": 170,
+        "y": 260,
+        "w": 90,
+        "h": 20
+      },
+      {
+        "comment": "right tunnel wall",
+        "x": 140,
+        "y": 420,
+        "w": 20,
+        "h": 400
+      },
+      {
+        "comment": "left tunnel wall",
+        "x": 250,
+        "y": 470,
+        "w": 20,
+        "h": 300
+      },
+      {
+        "comment": "top tunnel wall",
+        "x": 340,
+        "y": 230,
+        "w": 400,
+        "h": 20
+      },
+      {
+        "comment": "bottom tunnel wall",
+        "x": 390,
+        "y": 330,
+        "w": 300,
+        "h": 20
+      }
+    ],
+    "sands": [
+      {
+        "x": 445,
+        "y": 280,
+        "w": 190,
+        "h": 100
+      }
+    ]
   }
 }

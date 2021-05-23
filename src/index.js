@@ -1,5 +1,5 @@
-import Game from './js/game/Game';
-import GameWrapper from './js/interface/GameWrapper';
+// import Game from './js/game/Game';
+// import GameWrapper from './js/interface/GameWrapper';
 import Interface from './js/interface/Interface';
 
 const interface = new Interface();
@@ -7,7 +7,7 @@ interface.init();
 
 // const gameWrapper = new GameWrapper();
 // gameWrapper.render();
-// const game = new Game(gameWrapper.div, 7);
+// const game = new Game(gameWrapper.div, 8);
 // game.start();
 
 // const startMenu = new StartMenu();

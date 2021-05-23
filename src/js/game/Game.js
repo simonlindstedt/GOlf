@@ -8,6 +8,7 @@ import Wall from './Wall';
 import Sand from './Sand';
 import WinScreen from '../interface/WinScreen';
 import Water from './Water';
+import { fadeAway, resetAnimationClass } from './assets/Utility';
 
 export default class Game {
   constructor(parentElement, level, strikeCount) {
@@ -195,7 +196,7 @@ export default class Game {
     return distance > maxDistance;
   }
 
-  update() {
+  async update() {
     if (!this.paused) {
       if (this.cameraOutOfBounds(2000)) {
         this.viewport.animate({
@@ -221,12 +222,14 @@ export default class Game {
       }
     }
     if (this.winScreen.continue) {
+      this.winScreen.continue = false;
       this.paused = false;
       this.strikes = 0;
       this.level++;
-      // window.localStorage.level = this.level
+      resetAnimationClass(this.parentElement);
       this.load(this.level);
       this.strikeCount.updateCurrentStrikes(this.strikes, this.level);
+      await fadeAway(this.winScreen.section);
       this.winScreen.remove();
     }
   }

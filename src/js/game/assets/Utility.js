@@ -7,3 +7,10 @@ export const fadeAway = (element) => {
     }, 360);
   });
 };
+
+export const resetAnimationClass = (element) => {
+  element.classList.remove('fadeIn');
+  setTimeout(() => {
+    element.classList.add('fadeIn');
+  }, 1);
+};

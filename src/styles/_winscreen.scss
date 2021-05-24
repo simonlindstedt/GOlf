@@ -17,16 +17,11 @@
     flex-direction: column;
   }
 
-  button {
-    cursor: pointer;
+  button.ball {
     height: 7rem;
     width: 7rem;
-    background: url(./assets/images/ball.png);
-    border: none;
-    background-size: cover;
     filter: drop-shadow(0px 0px 0.625rem rgba(0, 0, 0, 0.43));
     transform: rotate(-0.09deg);
-    color: #4e5749;
     text-shadow: 0px 0px 0.25rem rgba(0, 0, 0, 0.33);
     font-size: 1.2rem;
     transition: transform 0.2s ease-in-out;

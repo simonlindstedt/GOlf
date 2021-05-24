@@ -22,7 +22,6 @@ export default class pauseMenu {
         this.buttons.push(button);
         this.section.appendChild(button);
       });
-      // this.section.appendChild(this.menuContainer);
       this.parent.appendChild(this.section);
     }
   }

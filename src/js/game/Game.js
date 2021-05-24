@@ -144,12 +144,6 @@ export default class Game {
   }
 
   start(debug, stats) {
-    // const renderWrapper = document.createElement('div');
-    // const appContainer = document.querySelector('main#app-container');
-    // renderWrapper.style.position = 'absolute';
-    // renderWrapper.style.top = '0';
-    // renderWrapper.style.pointerEvents = 'none';
-    // appContainer.insertAdjacentElement('afterend', renderWrapper);
     this.parentElement.appendChild(this.app.view);
     this.app.stage.addChild(this.viewport);
     this.viewport.clampZoom({
@@ -171,6 +165,13 @@ export default class Game {
     window.addEventListener('resize', this.handleResize);
 
     if (debug) {
+      const renderWrapper = document.createElement('div');
+      renderWrapper.id = 'debug-container';
+      const appContainer = document.querySelector('main#app-container');
+      renderWrapper.style.position = 'absolute';
+      renderWrapper.style.top = '0';
+      renderWrapper.style.pointerEvents = 'none';
+      appContainer.insertAdjacentElement('afterend', renderWrapper);
       const debugRenderer = Matter.Render.create({
         engine: this.engine,
         element: renderWrapper,
@@ -226,7 +227,14 @@ export default class Game {
       this.paused = false;
       this.strikes = 0;
       this.level++;
+<<<<<<< HEAD
       // resetAnimationClass(this.parentElement);
+=======
+      if (this.level > this.map.mapCount) {
+        this.level = 1;
+      }
+      resetAnimationClass(this.parentElement);
+>>>>>>> 7be71741d27017005c4ee9c6ad045a8e94c77420
       this.load(this.level);
       this.strikeCount.updateCurrentStrikes(this.strikes, this.level);
       await fadeAway(this.winScreen.section);
@@ -240,6 +248,9 @@ export default class Game {
     Matter.Composite.clear(this.engine.world);
     this.app.destroy();
     document.querySelector('#game-wrapper').remove();
+    if (document.querySelector('div#debug-container')) {
+      document.querySelector('div#debug-container').remove();
+    }
     window.removeEventListener('resize', this.handleResize);
   }
 }

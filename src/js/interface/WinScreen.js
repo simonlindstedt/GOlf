@@ -13,6 +13,7 @@ export default class WinScreen {
     this.message = document.createElement('h2');
     this.score = document.createElement('p');
     this.button = document.createElement('button');
+    this.button.classList.add('ball');
 
     this.section.id = 'win-screen';
     this.button.textContent = 'Next Map';

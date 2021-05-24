@@ -1,6 +1,6 @@
 #intro-screen {
   cursor: pointer;
-  animation: fade-in 2s ease-out 0.5s 1 backwards running;
+  animation: fade-in 2s ease-out 0.5s 1 backwards;
   height: inherit;
   width: inherit;
   padding: 1.5rem;
@@ -12,13 +12,11 @@
 
   button.ball {
     margin-top: 3rem;
-    font-family: inherit;
     width: 14rem;
     height: 14rem;
     animation: rotate 40s linear 0s infinite both;
     filter: drop-shadow(0px 0px 0.625rem rgba(0, 0, 0, 0.43));
     transform: rotate(-0.09deg);
-    color: #4e5749;
     text-shadow: 0px 0px 0.25rem rgba(0, 0, 0, 0.33);
     h1 {
       position: relative;

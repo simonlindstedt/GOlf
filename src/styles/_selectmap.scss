@@ -9,7 +9,6 @@
   justify-content: space-evenly;
   align-items: center;
   bottom: 6rem;
-  // background: rgb(62, 83, 20);
 }
 
 h1.select-map {
@@ -21,16 +20,12 @@ h1.select-map {
   color: #4e5749;
 }
 
-.map-selector button {
-  cursor: pointer;
+.map-selector button.ball {
   height: 4rem;
   width: 4rem;
-  background: url(./assets/images/ball.png);
-  border: none;
-  background-size: cover;
   filter: drop-shadow(0px 0px 0.625rem rgba(0, 0, 0, 0.43));
   transform: rotate(-0.09deg);
-  color: #4e5749;
+  font-family: Arial, Helvetica, sans-serif;
   text-shadow: 0px 0px 0.25rem rgba(0, 0, 0, 0.33);
   font-size: 1.2rem;
   transition: transform 0.2s ease-in-out;

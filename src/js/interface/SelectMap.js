@@ -5,6 +5,7 @@ export default class selectMap {
     this.levels = [];
   }
   render(mapClick, levelCount) {
+    const scoreObject = JSON.parse(window.sessionStorage.totalStrikes);
     this.mapClick = mapClick;
     this.section = document.createElement('section');
     this.section.classList.add('select-map-container');
@@ -22,7 +23,14 @@ export default class selectMap {
       mapButton.dataset.map = mapButton.textContent = i + 1;
       mapButton.addEventListener('click', this.mapClick);
       this.levels.push(mapButton);
-      this.mapSelector.appendChild(mapButton);
+      const flexContainer = document.createElement('div');
+      flexContainer.classList.add('flex-container');
+      const bestScore = document.createElement('h1.best-score');
+      bestScore.classList.add('best-score');
+      bestScore.textContent = scoreObject[`map${i + 1}`] ?? '-';
+      flexContainer.appendChild(mapButton);
+      flexContainer.appendChild(bestScore);
+      this.mapSelector.appendChild(flexContainer);
     }
 
     this.section.appendChild(this.heading);

@@ -5,6 +5,7 @@ import PauseMenu from './PauseMenu';
 import PauseButton from './PauseButton';
 import StrikeCount from './StrikeCount';
 import GameWrapper from './GameWrapper';
+import MusicButton from './MusicButton';
 import Map from '../game/Map';
 import { fadeAway } from '../game/assets/Utility';
 
@@ -51,6 +52,7 @@ export default class Interface {
           this.game.start(false, false);
           this.components.pauseMenu.options = this.menuOptions;
           this.components.pauseButton.render(this.pauseMenuClickHandler);
+          this.components.MusicButton.render();
           this.components.strikeCount.render();
           this.components.strikeCount.updateCurrentStrikes(
             this.game.strikes,
@@ -76,6 +78,7 @@ export default class Interface {
       pauseButton: new PauseButton(),
       gameWrapper: new GameWrapper(),
       strikeCount: new StrikeCount(),
+      MusicButton: new MusicButton(),
     };
   }
   init() {
@@ -85,6 +88,7 @@ export default class Interface {
       await fadeAway(this.components.selectMap.section);
       this.components.gameWrapper.render();
       this.components.strikeCount.render();
+      this.components.MusicButton.render();
       this.game = new Game(
         this.components.gameWrapper.div,
         e.target.dataset.map,
@@ -107,6 +111,7 @@ export default class Interface {
     };
 
     this.components.startMenu.render();
+    this.components.MusicButton.render();
     this.components.startMenu.section.addEventListener(
       'click',
       selectMapScreen

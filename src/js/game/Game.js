@@ -227,14 +227,10 @@ export default class Game {
       this.paused = false;
       this.strikes = 0;
       this.level++;
-<<<<<<< HEAD
-      // resetAnimationClass(this.parentElement);
-=======
       if (this.level > this.map.mapCount) {
         this.level = 1;
       }
       resetAnimationClass(this.parentElement);
->>>>>>> 7be71741d27017005c4ee9c6ad045a8e94c77420
       this.load(this.level);
       this.strikeCount.updateCurrentStrikes(this.strikes, this.level);
       await fadeAway(this.winScreen.section);

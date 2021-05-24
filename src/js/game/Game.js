@@ -16,9 +16,6 @@ export default class Game {
     this.parentElement = parentElement;
     this.width = this.parentElement.clientWidth;
     this.height = this.parentElement.clientHeight;
-    this.walls = [];
-    this.sands = [];
-    this.waters = [];
     this.level = parseInt(level);
     this.app = new PIXI.Application({
       width: this.width,
@@ -55,11 +52,11 @@ export default class Game {
     this.map = new Map(this.level);
     this.addBodies();
     this.setupGameEvents();
-    this.viewport.scaled = 1;
     this.viewport.corner = {
       x: this.ball.body.position.x - this.width / 2,
       y: this.ball.body.position.y - this.height / 2,
     };
+    this.viewport.scaled = 0.7;
   }
 
   addBodies() {

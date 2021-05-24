@@ -3,19 +3,6 @@
 @use 'interface';
 @use 'introscreen';
 @use 'selectmap';
+@use 'strikecount';
 @use 'pausemenu';
-
-// canvas,
-// .game-wrapper {
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-// }
-
-// #render-wrapper canvas {
-//   pointer-events: none;
-// }
-
-// #render-wrapper {
-//   pointer-events: none;
-// }
+@use 'winscreen';

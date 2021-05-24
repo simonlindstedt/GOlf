@@ -18,6 +18,7 @@ export default class selectMap {
 
     for (let i = 0; i < levelCount; i++) {
       const mapButton = document.createElement('button');
+      mapButton.classList.add('ball');
       mapButton.dataset.map = mapButton.textContent = i + 1;
       mapButton.addEventListener('click', this.mapClick);
       this.levels.push(mapButton);
@@ -28,13 +29,6 @@ export default class selectMap {
     this.section.appendChild(this.mapSelector);
     this.parent.appendChild(this.section);
     this.active = true;
-
-    // const div = document.createElement('div');
-    // div.classList.add('select-map-container');
-    // div.innerHTML =
-    //   '<h1 class="select-map">Select map</h1><div class="map-selector"><div class="map">1</div><div class="map">2</div><div class="map">3</div><div class="map">4</div><div class="map">5</div><div class="map">6</div><div class="map">7</div><div class="map">8</div><div class="map">9</div></div><button class="start-button">Start</button>';
-    // const container = document.querySelector('#app-container');
-    // container.appendChild(div);
   }
   remove() {
     for (let i = 0; i < this.levelCount; i++) {

@@ -17,8 +17,8 @@ export default class Ball {
     this.aimLine = new Graphics();
     this.graphic.interactive = true;
     this.graphic.cursor = 'pointer';
-    this.mouseDown = false;
     this.body = Bodies.circle(x, y, r, options);
+    this.body.frictionAir = 0.02;
     this.holeConstraint = undefined;
     this.inHole = false;
     this.distance = {
@@ -42,13 +42,13 @@ export default class Ball {
     if (mouseDown) {
       this.powerDisplay.clear();
       this.aimLine.clear();
-      this.powerDisplay.lineStyle(2, 0x000000, 1);
+      this.powerDisplay.lineStyle(1, 0xeeffee, 1);
       this.powerDisplay.drawCircle(
         this.body.position.x,
         this.body.position.y,
         this.powerDisplayRadius
       );
-      this.aimLine.lineStyle(2, 0x000000, 1);
+      this.aimLine.lineStyle(1, 0xeeffee, 1);
       this.aimLine.moveTo(this.body.position.x, this.body.position.y);
       this.aimLine.lineTo(mousePos.x, mousePos.y);
     } else {
@@ -60,20 +60,19 @@ export default class Ball {
   isInHole(hole, engine) {
     if (
       Math.abs(this.body.position.x - hole.sprite.position.x) <
-        hole.sprite.height &&
+        hole.sprite.height / 2 &&
       Math.abs(this.body.position.y - hole.sprite.position.y) <
-        hole.sprite.height
+        hole.sprite.height / 2
     ) {
       if (!this.holeConstraint) {
         this.holeConstraint = Constraint.create({
           bodyA: this.body,
           pointB: { x: hole.sprite.position.x, y: hole.sprite.position.y },
-          stiffness: 0.002,
+          stiffness: 0.004,
           length: 0,
         });
 
         Composite.add(engine.world, this.holeConstraint);
-        // this.inHole = true;
       }
     } else {
       if (this.holeConstraint) {
@@ -83,9 +82,9 @@ export default class Ball {
       }
     }
     if (
-      Math.abs(this.body.position.x - hole.sprite.position.x) < 0.5 &&
-      Math.abs(this.body.position.y - hole.sprite.position.y) < 0.5 &&
-      this.body.speed < 0.4
+      Math.abs(this.body.position.x - hole.sprite.position.x) < 0.8 &&
+      Math.abs(this.body.position.y - hole.sprite.position.y) < 0.8 &&
+      this.body.speed < 2
     ) {
       this.inHole = true;
     }
@@ -100,7 +99,7 @@ export default class Ball {
     ) {
       this.body.frictionAir = 0.2;
     } else {
-      this.body.frictionAir = 0.025;
+      this.body.frictionAir = 0.02;
     }
   }
 
@@ -134,6 +133,11 @@ export default class Ball {
   }
 
   moveBall() {
+    if (this.body.speed < 0.2) {
+      this.body.frictionAir = 0.2;
+    } else {
+      this.body.frictionAir = 0.02;
+    }
     this.graphic.clear();
     this.graphic.beginFill(0xffffff);
     this.graphic.drawCircle(

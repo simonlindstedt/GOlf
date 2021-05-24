@@ -137,12 +137,6 @@ export default class Game {
     });
   }
 
-  showWinScreen() {
-    this.paused = true;
-    this.winScreen.render(this.strikes);
-    this.strikeCount.updateTotalStrikes(this.strikes, this.level);
-  }
-
   start(debug, stats) {
     this.parentElement.appendChild(this.app.view);
     this.app.stage.addChild(this.viewport);
@@ -219,7 +213,9 @@ export default class Game {
       });
       this.ball.isInHole(this.hole, this.engine);
       if (this.ball.inHole) {
-        this.showWinScreen();
+        this.paused = true;
+        this.winScreen.render(this.strikes, this.level + 1 > this.map.mapCount);
+        this.strikeCount.updateTotalStrikes(this.strikes, this.level);
       }
     }
     if (this.winScreen.continue) {

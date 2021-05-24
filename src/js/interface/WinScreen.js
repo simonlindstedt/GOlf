@@ -5,7 +5,7 @@ export default class WinScreen {
     this.continue = false;
   }
 
-  render(score) {
+  render(score, end) {
     this.active = true;
     this.section = document.createElement('section');
     this.flexDiv = document.createElement('div');
@@ -16,8 +16,15 @@ export default class WinScreen {
     this.button.classList.add('ball');
 
     this.section.id = 'win-screen';
-    this.button.textContent = 'Next Map';
-    this.message.textContent = 'You did it!';
+
+    if (!end) {
+      this.button.textContent = 'Next Map';
+      this.message.textContent = 'You did it!';
+    } else {
+      this.button.textContent = 'Start over';
+      this.message.textContent = 'You completed the game!';
+    }
+
     this.score.textContent = `Total strikes: ${score}`;
 
     this.flexDiv.appendChild(this.message);

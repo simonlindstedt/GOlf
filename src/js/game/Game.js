@@ -77,7 +77,16 @@ export default class Game {
     // Walls / Bounds
     this.walls = [];
     this.map.coords.walls.forEach((w) => {
-      const wall = new Wall(w.x, w.y, w.w, w.h, w.a ?? 0, w.r ?? 0.5, w.s ?? 1);
+      const wall = new Wall(
+        w.x,
+        w.y,
+        w.w,
+        w.h,
+        w.a ?? 0,
+        w.r ?? 0.5,
+        w.s ?? 1,
+        w.isYrgo ?? 0
+      );
       this.walls.push(wall);
       this.viewport.addChild(wall.sprite);
       Matter.Composite.add(this.engine.world, [wall.body]);

@@ -226,7 +226,7 @@ export default class Game {
       this.paused = false;
       this.strikes = 0;
       this.level++;
-      resetAnimationClass(this.parentElement);
+      // resetAnimationClass(this.parentElement);
       this.load(this.level);
       this.strikeCount.updateCurrentStrikes(this.strikes, this.level);
       await fadeAway(this.winScreen.section);

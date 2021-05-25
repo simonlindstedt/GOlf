@@ -42,13 +42,13 @@ export default class Ball {
     if (mouseDown) {
       this.powerDisplay.clear();
       this.aimLine.clear();
-      this.powerDisplay.lineStyle(1, 0xeeffee, 1);
+      this.powerDisplay.lineStyle(2, 0xeeffee, 1);
       this.powerDisplay.drawCircle(
         this.body.position.x,
         this.body.position.y,
         this.powerDisplayRadius
       );
-      this.aimLine.lineStyle(1, 0xeeffee, 1);
+      this.aimLine.lineStyle(2, 0xeeffee, 1);
       this.aimLine.moveTo(this.body.position.x, this.body.position.y);
       this.aimLine.lineTo(mousePos.x, mousePos.y);
     } else {

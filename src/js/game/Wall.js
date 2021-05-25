@@ -42,6 +42,7 @@ export default class Wall {
         isStatic: this.isStatic,
         frictionAir: 0.04,
         friction: 0.001,
+        density: 0.0003,
       }
     );
   }

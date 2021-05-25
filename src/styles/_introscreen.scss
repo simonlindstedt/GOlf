@@ -15,7 +15,8 @@
     width: 14rem;
     height: 14rem;
     animation: rotate 40s linear 0s infinite both;
-    filter: drop-shadow(0px 0px 0.625rem rgba(0, 0, 0, 0.43));
+    // filter: drop-shadow(0px 0px 0.625rem rgba(0, 0, 0, 0.43));
+    box-shadow: 0px 0px 0.625rem rgba(0, 0, 0, 0.43);
     transform: rotate(-0.09deg);
     text-shadow: 0px 0px 0.25rem rgba(0, 0, 0, 0.33);
     h1 {

@@ -1,0 +1,6 @@
+{
+  "modules": false,
+  "plugins": {
+    "postcss-preset-env": {},
+  }
+}

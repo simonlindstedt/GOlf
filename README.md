@@ -10,7 +10,17 @@ Add the installation instructions.
 
 # Changelog
 
-- [#1 - Add a link to each pull request with a descriptive line.](#1)
+- [Maps and polish](https://github.com/simonlindstedt/GOlf/pull/16)
+- [Test maps and bugfixes](https://github.com/simonlindstedt/GOlf/pull/15)
+- [Styling](https://github.com/simonlindstedt/GOlf/pull/14)
+- [First Maps](https://github.com/simonlindstedt/GOlf/pull/13)
+- [Obsticles](https://github.com/simonlindstedt/GOlf/pull/12)
+- [Interface and interface structure](https://github.com/simonlindstedt/GOlf/pull/11)
+- [Map switcher and some restructuring](https://github.com/simonlindstedt/GOlf/pull/10)
+- [Flat ball and viewport / controllable camera](https://github.com/simonlindstedt/GOlf/pull/9)
+- [Map Maker](https://github.com/simonlindstedt/GOlf/pull/8)
+- [Hole Logic](https://github.com/simonlindstedt/GOlf/pull/6)
+- [Basic Golf Logic](https://github.com/simonlindstedt/GOlf/pull/5)
 
 # Code Review
 

@@ -41,6 +41,7 @@ export default class Wall {
         restitution: this.restitution,
         isStatic: this.isStatic,
         frictionAir: 0.04,
+        friction: 0.001,
       }
     );
   }

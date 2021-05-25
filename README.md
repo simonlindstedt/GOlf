@@ -33,10 +33,10 @@ A golfing game built using pixi.js and matter.js. [Live link](https://go-lf.netl
 
 Tested by the following people:
 
-1. Jane Boe
-2. John Foe
-3. Jane Doe
-4. John Doe
+1. Amanda Fager
+2. Gilda Eklöf
+3. Jakob Gustafsson
+4. Martin Hansson
 
 Tested by the following muggles (non-coders):
 

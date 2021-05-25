@@ -39,7 +39,7 @@ Tested by the following people:
 
 Tested by the following muggles (non-coders):
 
-1. Jane Doe
-2. John Doe
-3. Jane Doe
-4. John Doe
+1. Christian Sundberg
+2. Olle Sundberg
+3. Victoria Idström
+4. Siri Lindstedt

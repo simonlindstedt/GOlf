@@ -39,7 +39,6 @@ export default class MusicButton {
   }
 
   toggle() {
-    console.log(this.buttonEl);
     if (this.isToggled) {
       this.isToggled = false;
       this.audio.pause();

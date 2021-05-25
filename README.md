@@ -12,6 +12,7 @@ A golfing game built using pixi.js and matter.js. [Live link](https://go-lf.netl
 
 # Changelog
 
+- [Final Touches](https://github.com/simonlindstedt/GOlf/pull/17)
 - [Maps and polish](https://github.com/simonlindstedt/GOlf/pull/16)
 - [Test maps and bugfixes](https://github.com/simonlindstedt/GOlf/pull/15)
 - [Styling](https://github.com/simonlindstedt/GOlf/pull/14)

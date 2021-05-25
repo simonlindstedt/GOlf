@@ -42,6 +42,7 @@ export default class MusicButton {
 
   remove() {
     this.buttonEl?.remove();
+    this.buttonContainer.remove();
     this.active = false;
   }
 }

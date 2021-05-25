@@ -67,6 +67,7 @@ export default class Interface {
           this.clear();
           this.game.clear();
           this.components.selectMap.render(this.loadMap, this.mapCount);
+          this.components.MusicButton.render();
         },
       ],
     ];
@@ -86,6 +87,7 @@ export default class Interface {
 
     this.loadMap = async (e) => {
       await fadeAway(this.components.selectMap.section);
+      this.clear();
       this.components.gameWrapper.render();
       this.components.strikeCount.render();
       this.components.MusicButton.render();
@@ -102,12 +104,14 @@ export default class Interface {
 
     const selectMapScreen = async () => {
       await fadeAway(this.components.startMenu.section);
+      this.clear();
       this.components.startMenu.startButton.removeEventListener(
         'click',
         selectMapScreen
       );
       //Room for optimizations due to duplicate maps.json import
       this.components.selectMap.render(this.loadMap, this.mapCount);
+      this.components.MusicButton.render();
     };
 
     this.components.startMenu.render();

@@ -10,6 +10,13 @@
   "prettier": {
     "singleQuote": true
   },
+  "browserslist": [
+    "last 3 and_chr versions",
+    "last 3 chrome versions",
+    "last 3 opera versions",
+    "last 3 ios_saf versions",
+    "last 3 safari versions"
+  ],
   "dependencies": {
     "matter-js": "^0.17.1",
     "pixi-filters": "^4.1.0",
@@ -21,6 +28,7 @@
   "devDependencies": {
     "@parcel/transformer-image": "^2.0.0-beta.2",
     "@parcel/transformer-sass": "^2.0.0-beta.2",
-    "parcel": "^2.0.0-beta.2"
+    "parcel": "^2.0.0-beta.2",
+    "postcss-preset-env": "^6.7.0"
   }
 }

@@ -8,7 +8,7 @@ import Wall from './Wall';
 import Sand from './Sand';
 import WinScreen from '../interface/WinScreen';
 import Water from './Water';
-import { fadeAway, resetAnimationClass } from './assets/Utility';
+import { fadeAway } from './assets/Utility';
 
 export default class Game {
   constructor(parentElement, level, strikeCount) {
@@ -227,9 +227,7 @@ export default class Game {
       this.paused = false;
       this.strikes = 0;
       this.level++;
-      if (this.level > this.map.mapCount) {
-        this.level = 1;
-      }
+      if (this.level > this.map.mapCount) this.level = 1;
       this.load(this.level);
       this.strikeCount.updateCurrentStrikes(this.strikes, this.level);
       await fadeAway(this.winScreen.section);

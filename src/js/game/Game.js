@@ -213,6 +213,7 @@ export default class Game {
       this.waters.forEach((water) => {
         if (this.ball.isInWater(water, this)) {
           this.strikes += 1;
+          this.strikeCount.updateCurrentStrikes(this.strikes, this.level);
         }
       });
       this.ball.isInHole(this.hole, this.engine);

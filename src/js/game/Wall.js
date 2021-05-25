@@ -4,14 +4,14 @@ import wood from 'url:~src/js/game/assets/textures/wood.jpg';
 
 export default class Wall {
   constructor(x, y, width, height, angle, restitution, isStatic, isYrgo) {
-    if (isStatic) {
+    if (isStatic || isYrgo) {
       this.sprite = Sprite.from(Texture.WHITE);
+      if (isYrgo) this.sprite.tint = 0xef1d30;
     } else {
-      this.sprite = Sprite.from(Texture(wood));
+      this.sprite = Sprite.from(Texture.from(wood));
     }
 
     this.height = height;
-    this.sprite.tint = isYrgo ? 0xef1d30 : undefined;
     this.width = width;
     this.angle = angle;
     this.x = x;

@@ -1,21 +1,17 @@
 import Matter from 'matter-js';
 import { Sprite, Texture } from 'pixi.js';
 import wood from 'url:~src/js/game/assets/textures/wood.jpg';
-import yrgo from 'url:~src/js/game/assets/textures/yrgo.png';
 
 export default class Wall {
   constructor(x, y, width, height, angle, restitution, isStatic, isYrgo) {
-    //Sprite
-    if (isYrgo) {
-      this.sprite = Sprite.from(yrgo);
+    if (isStatic) {
+      this.sprite = Sprite.from(Texture.WHITE);
     } else {
-      if (isStatic) {
-        this.sprite = Sprite.from(Texture.WHITE);
-      } else {
-        this.sprite = Sprite.from(Texture.from(wood));
-      }
+      this.sprite = Sprite.from(Texture(wood));
     }
+
     this.height = height;
+    this.sprite.tint = isYrgo ? 0xef1d30 : undefined;
     this.width = width;
     this.angle = angle;
     this.x = x;

@@ -4,6 +4,18 @@ export default class MusicButton {
   constructor() {
     this.isToggled = false;
     this.audio = new Audio(audioFile);
+    if (typeof this.audio.loop == 'boolean') {
+      this.audio.loop = true;
+    } else {
+      this.audio.addEventListener(
+        'ended',
+        function () {
+          this.currentTime = 0;
+          this.play();
+        },
+        false
+      );
+    }
     this.parent = document.querySelector('main#app-container');
   }
 
@@ -27,6 +39,7 @@ export default class MusicButton {
   }
 
   toggle() {
+    console.log(this.buttonEl);
     if (this.isToggled) {
       this.isToggled = false;
       this.audio.pause();

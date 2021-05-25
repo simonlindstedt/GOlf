@@ -230,7 +230,7 @@ export default class Game {
       if (this.level > this.map.mapCount) {
         this.level = 1;
       }
-      resetAnimationClass(this.parentElement);
+      // resetAnimationClass(this.parentElement);
       this.load(this.level);
       this.strikeCount.updateCurrentStrikes(this.strikes, this.level);
       await fadeAway(this.winScreen.section);

@@ -5,6 +5,7 @@ export default class GameWrapper {
   }
   render() {
     this.div = document.createElement('div');
+    this.div.classList.add('fadeIn');
     this.div.id = 'game-wrapper';
     this.parent.appendChild(this.div);
   }

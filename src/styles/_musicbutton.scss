@@ -1,0 +1,38 @@
+.music-button {
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  border: none;
+  height: 2rem;
+  width: 2rem;
+  position: relative;
+  margin-top: 10px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.button-container {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 1.125rem;
+  background: rgba(255, 255, 255, 0.629);
+  backdrop-filter: blur(3px);
+  transition: 0.3s ease-out;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.07);
+  }
+}
+
+.music-playing {
+  background: url(./assets/images/volume.svg);
+  animation: pulse-invert ease-in-out 2s infinite both;
+}
+
+.music-not-playing {
+  background: url(./assets/images/novolume.svg);
+}

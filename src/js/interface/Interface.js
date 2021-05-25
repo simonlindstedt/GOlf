@@ -3,12 +3,27 @@ import StartMenu from './StartMenu';
 import SelectMap from './SelectMap';
 import PauseMenu from './PauseMenu';
 import PauseButton from './PauseButton';
+import StrikeCount from './StrikeCount';
 import GameWrapper from './GameWrapper';
+import MusicButton from './MusicButton';
 import Map from '../game/Map';
+import { fadeAway } from '../game/assets/Utility';
 
 export default class Interface {
   constructor() {
+    this.mapCount = new Map(1).mapCount;
     this.parent = document.querySelector('main#app-container');
+    this.pauseMenuClickHandler = () => {
+      if (this.components.pauseMenu.paused) {
+        this.components.pauseMenu.paused = false;
+        this.game.paused = false;
+        this.components.pauseMenu.remove();
+      } else {
+        this.components.pauseMenu.paused = true;
+        this.game.paused = true;
+        this.components.pauseMenu.render();
+      }
+    };
 
     this.menuOptions = [
       [
@@ -16,15 +31,43 @@ export default class Interface {
         () => {
           this.components.pauseMenu.paused = false;
           this.game.paused = false;
-          this.components.pauseMenu.remove();
+          fadeAway(this.components.pauseMenu.section);
         },
       ],
       [
-        'To start',
-        () => {
+        'Restart',
+        async () => {
+          let currentLevel = this.game.level;
+          this.components.pauseMenu.paused = false;
+          this.game.paused = false;
+          await fadeAway(this.components.pauseMenu.section);
+          this.game.clear();
+          this.clear();
+          this.components.gameWrapper.render();
+          this.game = new Game(
+            this.components.gameWrapper.div,
+            currentLevel,
+            this.components.strikeCount
+          );
+          this.game.start(false, false);
+          this.components.pauseMenu.options = this.menuOptions;
+          this.components.pauseButton.render(this.pauseMenuClickHandler);
+          this.components.MusicButton.render();
+          this.components.strikeCount.render();
+          this.components.strikeCount.updateCurrentStrikes(
+            this.game.strikes,
+            this.game.level
+          );
+        },
+      ],
+      [
+        'Exit map',
+        async () => {
+          await fadeAway(this.components.pauseMenu.section);
           this.clear();
           this.game.clear();
-          this.init();
+          this.components.selectMap.render(this.loadMap, this.mapCount);
+          this.components.MusicButton.render();
         },
       ],
     ];
@@ -35,45 +78,44 @@ export default class Interface {
       pauseMenu: new PauseMenu(),
       pauseButton: new PauseButton(),
       gameWrapper: new GameWrapper(),
+      strikeCount: new StrikeCount(),
+      MusicButton: new MusicButton(),
     };
   }
   init() {
     this.clear();
 
-    const loadMap = (e) => {
-      this.components.selectMap.remove();
+    this.loadMap = async (e) => {
+      await fadeAway(this.components.selectMap.section);
+      this.clear();
       this.components.gameWrapper.render();
+      this.components.strikeCount.render();
+      this.components.MusicButton.render();
       this.game = new Game(
         this.components.gameWrapper.div,
-        e.target.dataset.map
+        e.target.dataset.map,
+        this.components.strikeCount
       );
+      window.sessionStorage.currentMap = e.target.dataset.map;
       this.game.start(false, false);
-      const clickHandler = () => {
-        if (this.components.pauseMenu.paused) {
-          this.components.pauseMenu.paused = false;
-          this.game.paused = false;
-          this.components.pauseMenu.remove();
-        } else {
-          this.components.pauseMenu.paused = true;
-          this.game.paused = true;
-          this.components.pauseMenu.render();
-        }
-      };
       this.components.pauseMenu.options = this.menuOptions;
-      this.components.pauseButton.render(clickHandler);
+      this.components.pauseButton.render(this.pauseMenuClickHandler);
     };
 
-    const selectMapScreen = () => {
-      this.components.startMenu.remove();
+    const selectMapScreen = async () => {
+      await fadeAway(this.components.startMenu.section);
+      this.clear();
       this.components.startMenu.startButton.removeEventListener(
         'click',
         selectMapScreen
       );
       //Room for optimizations due to duplicate maps.json import
-      this.components.selectMap.render(loadMap, new Map(1).mapCount);
+      this.components.selectMap.render(this.loadMap, this.mapCount);
+      this.components.MusicButton.render();
     };
 
     this.components.startMenu.render();
+    this.components.MusicButton.render();
     this.components.startMenu.section.addEventListener(
       'click',
       selectMapScreen

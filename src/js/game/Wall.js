@@ -1,20 +1,20 @@
 import Matter from 'matter-js';
 import { Sprite, Texture } from 'pixi.js';
-import wallPng from 'url:~src/js/game/assets/textures/white.png';
+import wood from 'url:~src/js/game/assets/textures/wood.jpg';
+import yrgo from 'url:~src/js/game/assets/textures/yrgo.png';
 
 export default class Wall {
-  constructor(
-    x,
-    y,
-    width,
-    height,
-    angle,
-    restitution,
-    isStatic,
-    image = wallPng
-  ) {
+  constructor(x, y, width, height, angle, restitution, isStatic, isYrgo) {
     //Sprite
-    this.sprite = Sprite.from(Texture.WHITE);
+    if (isYrgo) {
+      this.sprite = Sprite.from(yrgo);
+    } else {
+      if (isStatic) {
+        this.sprite = Sprite.from(Texture.WHITE);
+      } else {
+        this.sprite = Sprite.from(Texture.from(wood));
+      }
+    }
     this.height = height;
     this.width = width;
     this.angle = angle;
@@ -38,8 +38,11 @@ export default class Wall {
       this.height,
       {
         angle: this.angle * (Math.PI / 180),
-        restitution: this.restitution,
+        restitution: isYrgo ? 2 : this.restitution,
         isStatic: this.isStatic,
+        frictionAir: isYrgo ? 0.000001 : 0.04,
+        friction: 0.001,
+        density: isYrgo ? 0.000005 : 0.0005,
       }
     );
   }

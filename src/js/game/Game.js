@@ -8,15 +8,14 @@ import Wall from './Wall';
 import Sand from './Sand';
 import WinScreen from '../interface/WinScreen';
 import Water from './Water';
+import { fadeAway } from './assets/Utility';
 
 export default class Game {
-  constructor(parentElement, level) {
+  constructor(parentElement, level, strikeCount) {
+    this.strikeCount = strikeCount;
     this.parentElement = parentElement;
     this.width = this.parentElement.clientWidth;
     this.height = this.parentElement.clientHeight;
-    this.walls = [];
-    this.sands = [];
-    this.waters = [];
     this.level = parseInt(level);
     this.app = new PIXI.Application({
       width: this.width,
@@ -38,6 +37,7 @@ export default class Game {
     this.winScreen = new WinScreen();
     this.strikes = 0;
     this.load();
+    this.strikeCount.updateCurrentStrikes(this.strikes, this.level);
   }
 
   load() {
@@ -52,44 +52,45 @@ export default class Game {
     this.map = new Map(this.level);
     this.addBodies();
     this.setupGameEvents();
-    this.viewport.scaled = 1;
-    if (this.map.coords.camera) {
-      this.viewport.corner = {
-        x: this.map.coords.camera.x,
-        y: this.map.coords.camera.y,
-      };
-    } else {
-      this.viewport.corner = {
-        x: 0,
-        y: 0,
-      };
-    }
+
+    this.viewport.center = this.ball.body.position;
+    this.viewport.scaled = 0.7;
   }
 
   addBodies() {
+    // Sand
+    this.sands = [];
+    this.map.coords.sands?.forEach((s) => {
+      const sand = new Sand(s.x, s.y, s.w, s.h);
+      this.sands.push(sand);
+      this.viewport.addChild(sand.sprite);
+    });
+
+    // Water
+    this.waters = [];
+    this.map.coords.waters?.forEach((w) => {
+      const water = new Water(w.x, w.y, w.w, w.h);
+      this.waters.push(water);
+      this.viewport.addChild(water.sprite);
+    });
+
     // Walls / Bounds
+    this.walls = [];
     this.map.coords.walls.forEach((w) => {
-      const wall = new Wall(w.x, w.y, w.w, w.h, w.a ?? 0, w.r ?? 0.5, w.s ?? 1);
+      const wall = new Wall(
+        w.x,
+        w.y,
+        w.w,
+        w.h,
+        w.a ?? 0,
+        w.r ?? 0.5,
+        w.s ?? 1,
+        w.isYrgo ?? 0
+      );
       this.walls.push(wall);
       this.viewport.addChild(wall.sprite);
       Matter.Composite.add(this.engine.world, [wall.body]);
     });
-    // Sand
-    if (this.map.coords.sands) {
-      this.map.coords.sands.forEach((s) => {
-        const sand = new Sand(s.x, s.y, s.w, s.h);
-        this.sands.push(sand);
-        this.viewport.addChild(sand.sprite);
-      });
-    }
-    // Water
-    if (this.map.coords.waters) {
-      this.map.coords.waters.forEach((w) => {
-        const water = new Water(w.x, w.y, w.w, w.h);
-        this.waters.push(water);
-        this.viewport.addChild(water.sprite);
-      });
-    }
 
     // Hole
     this.hole = new Hole(
@@ -114,8 +115,10 @@ export default class Game {
     this.mousePos = { x: 0, y: 0 };
 
     this.ball.graphic.on('pointerdown', () => {
-      this.ballDown = true;
       this.viewport.plugins.pause('drag');
+      if (this.ball.body.speed < 0.2) {
+        this.ballDown = true;
+      }
     });
 
     this.viewport.on('pointermove', (e) => {
@@ -128,27 +131,17 @@ export default class Game {
     });
 
     this.viewport.on('pointerup', () => {
+      this.viewport.plugins.resume('drag');
       if (this.ballDown) {
         this.ballDown = false;
         this.ball.shoot(this.mousePos);
         this.strikes++;
-        this.viewport.plugins.resume('drag');
+        this.strikeCount.updateCurrentStrikes(this.strikes, this.level);
       }
     });
   }
 
-  showWinScreen() {
-    this.paused = true;
-    this.winScreen.render(this.strikes);
-  }
-
   start(debug, stats) {
-    const renderWrapper = document.createElement('div');
-    const appContainer = document.querySelector('main#app-container');
-    renderWrapper.style.position = 'absolute';
-    renderWrapper.style.top = '0';
-    renderWrapper.style.pointerEvents = 'none';
-    appContainer.insertAdjacentElement('afterend', renderWrapper);
     this.parentElement.appendChild(this.app.view);
     this.app.stage.addChild(this.viewport);
     this.viewport.clampZoom({
@@ -163,11 +156,20 @@ export default class Game {
         this.parentElement.clientWidth,
         this.parentElement.clientHeight
       );
+      this.viewport.screenWidth = this.parentElement.clientWidth;
+      this.viewport.screenHeight = this.parentElement.clientHeight;
     };
 
     window.addEventListener('resize', this.handleResize);
 
     if (debug) {
+      const renderWrapper = document.createElement('div');
+      renderWrapper.id = 'debug-container';
+      const appContainer = document.querySelector('main#app-container');
+      renderWrapper.style.position = 'absolute';
+      renderWrapper.style.top = '0';
+      renderWrapper.style.pointerEvents = 'none';
+      appContainer.insertAdjacentElement('afterend', renderWrapper);
       const debugRenderer = Matter.Render.create({
         engine: this.engine,
         element: renderWrapper,
@@ -185,8 +187,24 @@ export default class Game {
     });
   }
 
-  update() {
+  cameraOutOfBounds(maxDistance) {
+    const distance = Math.sqrt(
+      Math.pow(this.viewport.center.x - this.ball.body.position.x, 2) +
+        Math.pow(this.viewport.center.y - this.ball.body.position.y, 2)
+    );
+    return distance > maxDistance;
+  }
+
+  async update() {
     if (!this.paused) {
+      if (this.cameraOutOfBounds(2000)) {
+        this.viewport.animate({
+          position: this.ball.body.position,
+          time: 1500,
+          ease: 'easeOutQuint',
+        });
+      }
+
       Matter.Engine.update(this.engine);
       this.ball.moveBall();
       this.walls.forEach((wall) => wall.moveWall());
@@ -199,24 +217,33 @@ export default class Game {
       });
       this.ball.isInHole(this.hole, this.engine);
       if (this.ball.inHole) {
-        this.showWinScreen();
+        this.paused = true;
+        this.winScreen.render(this.strikes, this.level + 1 > this.map.mapCount);
+        this.strikeCount.updateTotalStrikes(this.strikes, this.level);
       }
     }
     if (this.winScreen.continue) {
+      this.winScreen.continue = false;
       this.paused = false;
       this.strikes = 0;
       this.level++;
-      // window.localStorage.level = this.level
+      if (this.level > this.map.mapCount) this.level = 1;
       this.load(this.level);
+      this.strikeCount.updateCurrentStrikes(this.strikes, this.level);
+      await fadeAway(this.winScreen.section);
       this.winScreen.remove();
     }
   }
 
   clear() {
+    this.strikes = 0;
     this.viewport.removeChildren();
     Matter.Composite.clear(this.engine.world);
     this.app.destroy();
     document.querySelector('#game-wrapper').remove();
+    if (document.querySelector('div#debug-container')) {
+      document.querySelector('div#debug-container').remove();
+    }
     window.removeEventListener('resize', this.handleResize);
   }
 }

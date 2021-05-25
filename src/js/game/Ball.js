@@ -38,17 +38,25 @@ export default class Ball {
     });
   }
 
+  aimDisplayColor() {
+    let colorPercent = (this.powerDisplayRadius / this.distance.max) * 255;
+    let redHex = colorPercent.toString(16).slice(0, 2);
+    let yellowHex = (colorPercent / 3).toString(16).slice(0, 2);
+    let blueHex = (colorPercent / 3).toString(16).slice(0, 2);
+    return `0x${redHex}${yellowHex}${blueHex}`;
+  }
+
   drawAimDisplay(mousePos, mouseDown) {
     if (mouseDown) {
       this.powerDisplay.clear();
       this.aimLine.clear();
-      this.powerDisplay.lineStyle(2, 0xeeffee, 1);
+      this.powerDisplay.lineStyle(3, this.aimDisplayColor(), 1);
       this.powerDisplay.drawCircle(
         this.body.position.x,
         this.body.position.y,
         this.powerDisplayRadius
       );
-      this.aimLine.lineStyle(2, 0xeeffee, 1);
+      this.aimLine.lineStyle(3, this.aimDisplayColor(), 1);
       this.aimLine.moveTo(this.body.position.x, this.body.position.y);
       this.aimLine.lineTo(mousePos.x, mousePos.y);
     } else {

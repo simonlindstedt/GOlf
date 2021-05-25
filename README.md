@@ -1,12 +1,14 @@
-INSERT MANDATORY GIF
+<img src="https://media.giphy.com/media/bgxQDCg1hdvJm/giphy.gif" width=100% />
 
-# Project Title
+# GOlf
 
-Text about the project and which JavaScript library you're using. This would also be a great place to link the game on Netlify.
+A golfing game built using pixi.js and matter.js. [Live link](https://go-lf.netlify.app/).
 
 # Installation
 
-Add the installation instructions.
+1. Clone this repo.
+2. Run ```npm install``` in the project directory.
+3. Run ```npm run start``` and then navigate to ```localhost:4000``` in your preferred browser.
 
 # Changelog
 

@@ -7,8 +7,8 @@ A golfing game built using pixi.js and matter.js. [Live link](https://go-lf.netl
 # Installation
 
 1. Clone this repo.
-2. Run ```npm install``` in the project directory.
-3. Run ```npm run start``` and then navigate to ```localhost:4000``` in your preferred browser.
+2. Run `npm install` in the project directory.
+3. Run `npm run start` and then navigate to `localhost:4000` in your preferred browser.
 
 # Changelog
 
@@ -27,7 +27,24 @@ A golfing game built using pixi.js and matter.js. [Live link](https://go-lf.netl
 
 # Code Review
 
-1. `example.js:10-15` - Remember to think about X and this could be refactored using the amazing Y function.
+### By [Joacim Johansson](https://github.com/JoeyJaySWE) and [Victor Stranne](https://github.com/Vstranne)
+
+1. `_introscreen.scss:18` - Commentated, perhaps remove.
+2. `_pausemenmu.scss:24` - Commentated, perhaps remove.
+3. `src/js/game/ball.js:41-46` as I understand it, you are getting a decimal color based on the force,
+   then converts it into a hexa deciaml. But I don't quite get how you get different colors for
+   row 44 and 45 as they use the exact same values.
+4. `src/js/game/ball.js: 41-46:` here you use `this.PowerDisplay` a lot, but I have yet to see it
+   implemented in the code. Where does it originate?
+5. `src/js/game/ball.js: 70 - 73` Clever use of the the stored postions of the object to calicluate the
+   balls position in relation to it. Used manual numbers myself and took way more space.
+6. `src/js/game/assets/maps.json:` Did you set this up manually or did you have some 3rd-party tool?
+7. `src/js/game/Game.js` - Try to have more descriptive comments, and perhaps more than just one word and avoid comments if not really needed, i.e. line 95.
+8. `src/js/game/Wall.js:29` - Another comment that feels pretty useless :D
+9. `All files` - Good naming in general which helps alot, but perhaps add more comments to make it easier for someone else to navigate through the code.
+10. `General` Very good structure in the project!
+
+Well done guys! Awesome project!
 
 # Testers
 
